@@ -8,18 +8,24 @@ import { CrossRatesComponent } from './components/cross-rates/cross-rates.compon
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
+import { ChartsModule } from 'ng2-charts';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormConverterComponent,
-    CrossRatesComponent
+    CrossRatesComponent,
+    LineChartComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    ChartsModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
