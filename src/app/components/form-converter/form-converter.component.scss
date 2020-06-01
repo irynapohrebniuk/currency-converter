@@ -1,0 +1,100 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,500,700,700i&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i&display=swap");
+
+* {
+  font-family: Lato, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 18px;
+}
+
+.flex-container {
+  display: flex;
+  background-color: DodgerBlue;
+}
+
+.flex-container > div {
+  background-color: #f1f1f1;
+  margin: 10px;
+  padding: 20px;
+  font-size: 30px;
+}
+
+.header {
+    display: block;
+    font-size: 18px;
+    
+}
+
+.footer {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    position: relative;
+    bottom: 0;
+    
+}
+
+input {
+  display: inline-block;
+  border: none;
+  padding: 10px;
+  font-size: 20px;
+  outline: none;
+  
+  &:hover {
+    border: none;
+    outline: none;
+  }
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}
+
+.input {
+    display: inline-block;
+    height: 58px;
+    
+}
+
+select {
+    border: none;
+    background-color: #f1f1f1;
+    margin-right: 3px;
+    outline: none;
+    &:hover {
+        border: none;
+        outline-style: none;
+      }
+      &:focus {
+        border: none;
+        outline-style: none;
+      }
+}
+
+button {
+    display: inline-block;
+    height: 60px;
+    border: none;
+    background-color: #f1f1f1;
+    outline: none;
+}
+
+.select {
+    display: inline-block;
+}
+
+.right {
+  display: flex;
+  float: right;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gainsboro;
+}

@@ -1,0 +1,35 @@
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th *ngFor="let base of header" scope="col">{{base}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let base of bases; let i = index" >
+            <th scope="row">{{ base }}</th>
+            <td *ngIf="ratesRefs[base]">
+                <span *ngIf="base !== bases[0]">{{ratesRefs[base].rates[bases[0]] | number: '1.2-2' }}</span>
+                <span *ngIf="base == bases[0]">-</span>
+            </td>
+            <td *ngIf="ratesRefs[base]">
+                <span *ngIf="base !== bases[1]">{{ratesRefs[base].rates[bases[1]] | number: '1.2-2' }}</span>
+                <span *ngIf="base == bases[1]">-</span>
+            </td>
+            <td *ngIf="ratesRefs[base]">
+                <span *ngIf="base !== bases[2]">{{ratesRefs[base].rates[bases[2]] | number: '1.2-2' }}</span>
+                <span *ngIf="base == bases[2]">-</span>
+            </td>
+            <td *ngIf="ratesRefs[base]">
+                <span *ngIf="base !== bases[3]">{{ratesRefs[base].rates[bases[3]] | number: '1.2-2' }}</span>
+                <span *ngIf="base == bases[3]">-</span>
+            </td>
+            <td *ngIf="ratesRefs[base]">
+                <span *ngIf="base !== bases[4]">{{ratesRefs[base].rates[bases[4]] | number: '1.2-2' }}</span>
+                <span *ngIf="base == bases[4]">-</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- <div *ngFor="let rate of rates | keyvalue">{{rate | json }} {{rate.key}} {{rate.value}} </div> -->
