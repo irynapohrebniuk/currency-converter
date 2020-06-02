@@ -32,7 +32,6 @@ export class CrossRatesComponent implements OnInit {
         this.apiService.getCrossRates(this.countries_str, base).subscribe((result: RatesRef) => {
             let data = {"rates": result.rates}
             this.ratesRefs[base] = data;
-            console.log("this refs: ", this.ratesRefs);
         }); 
         
         //  console.log(Object.keys(this.ratesRefs[0].rates));

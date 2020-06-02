@@ -10,7 +10,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { ChartsModule } from 'ng2-charts';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
-import { ChartComponent } from './chart/chart.component';
+import { ChartComponent } from './components/chart/chart.component';
+import { LatestRatesComponent } from './components/latest-rates/latest-rates.component';
+import { RateDynamicsComponent } from './components/rate-dynamics/rate-dynamics.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { ChartComponent } from './chart/chart.component';
     FormConverterComponent,
     CrossRatesComponent,
     LineChartComponent,
-    ChartComponent
+    ChartComponent,
+    LatestRatesComponent,
+    RateDynamicsComponent
   ],
   imports: [
     BrowserModule,

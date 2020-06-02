@@ -1,0 +1,41 @@
+<p>exchange-rate-dynamics works!</p>
+
+<table class="table table-striped" *ngIf="data">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Rate</th>
+    <th scope="col">
+      <span>100 {{currency}}</span>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of data | keyvalue">
+    <th scope="row">{{ item.key }}</th>
+    <td>
+      {{ item.value }}
+    </td>
+    <td>
+      {{ item.value * 100 }}
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div *ngFor="let item of data | keyvalue">
+  
+    {{ item.key }}
+  
+</div>
+
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+  </ngb-pagination>
+
+  <!-- <select class="custom-select" style="width: auto" [(ngModel)]="value">
+    <option [value]="2">2 items per page</option>
+    <option [value]="4">4 items per page</option>
+    <option [value]="6">6 items per page</option>
+  </select> -->
+</div>

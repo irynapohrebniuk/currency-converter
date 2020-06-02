@@ -57,3 +57,16 @@
         </div>
     </div>
 </div>
+
+    <div class="btn-group btn-group-toggle m-2">
+        <div *ngFor="let period of periods; let i = index" 
+                [class.active] = "currentIndex === i"
+                class='btn btn-light' 
+                (click)="handleClick(i)">
+            {{period}}
+        </div>
+    </div>
+
+<app-rate-dynamics ></app-rate-dynamics>
+
+<!-- [currentIndex]='currentIndex' -->

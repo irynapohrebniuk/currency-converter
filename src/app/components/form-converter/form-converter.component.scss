@@ -98,3 +98,13 @@ button {
   flex-direction: column;
   border: 1px solid gainsboro;
 }
+
+.thumb {
+  cursor: pointer;
+  width: 24px;
+}
+
+.active {
+  border: 1px solid #df6c4f;
+  background-color: #bfc1c3 !important;
+}
