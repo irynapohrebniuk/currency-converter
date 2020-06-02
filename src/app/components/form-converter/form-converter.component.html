@@ -1,55 +1,48 @@
-<div class="flex-container">
-    <div>
-        <div>
+<div class="container" *ngIf="currencies">
+    <div class="row align-items-center">
+        <div class="col">
             <label>
                 <div class="header">Currency I have</div>
                 <div class="input">
                     <input value="">
                 </div>
-                <div class="select">
-                    <button>
-                        <span>USD</span>
-                        <span>
-                            <select id="country" name="country">
-                                <option value="australia">Australia</option>
-                                <option value="canada">Canada</option>
-                                <option value="usa">USA</option>
-                            </select>
-                        </span>
-                    </button>
-                </div>
+                
+                    <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
+                            Currency
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                          <button ngbDropdownItem *ngFor="let currency of currencies | keyvalue">
+                              <span><img src="{{currency.value}}" height="24px" width="24px"></span>
+                              {{currency.key}}
+                            </button>
+                        </div>
+                    </div>
+                    
                 <div class="footer">1 USD = 26.765 UAH</div>
             </label>
         </div>
-    </div>
-    <div>
-        <button>
-            <span>
 
-            </span>
-        </button>
-    </div>
-    <div>
-        <div>
+        <div class="col-icon">
+            <button>
+                <span>
+                </span>
+            </button>
+        </div>
+
+        <div class="col">
             <label>
                 <div class="header">
                     Currency I want
                 </div>
-
                 <input value="">
-                <div class="select">
-                    <button>
-                        <span>USD</span>
-                        <span>
-                            <select id="country" name="country">
-                                <option value="australia">Australia</option>
-                                <option value="canada">Canada</option>
-                                <option value="usa">USA</option>
-                            </select>
-                        </span>
-                    </button>
+                <div class="custom-select">
+                    <select id="country" name="country">
+                        <option value="australia"><span>USD</span>Australia</option>
+                        <option value="canada"><span>USD</span>Canada</option>
+                        <option value="usa"><span>USD</span>USA</option>
+                    </select>
                 </div>
-
                 <div class="footer">
                     1 UAH = 0.0374 USD
                 </div>
@@ -67,6 +60,4 @@
         </div>
     </div>
 
-<app-rate-dynamics ></app-rate-dynamics>
-
-<!-- [currentIndex]='currentIndex' -->
+<app-rate-dynamics [period]='period'></app-rate-dynamics>

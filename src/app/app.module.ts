@@ -13,6 +13,7 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
 import { ChartComponent } from './components/chart/chart.component';
 import { LatestRatesComponent } from './components/latest-rates/latest-rates.component';
 import { RateDynamicsComponent } from './components/rate-dynamics/rate-dynamics.component';
+import { CalcService } from './services/calc.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { RateDynamicsComponent } from './components/rate-dynamics/rate-dynamics.
     HttpClientModule,
     ChartsModule
   ],
-  providers: [ApiService],
+  providers: [ApiService, CalcService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

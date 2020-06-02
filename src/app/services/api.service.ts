@@ -22,8 +22,8 @@ export class ApiService {
 
   // https://api.exchangeratesapi.io/history?base=PLN&start_at=2018-01-01&end_at=2018-09-01&symbols=USD
   getRatesFromPeriod(base, currency,from,to) {
-    return this.http.get('https://api.exchangeratesapi.io/history?base=' + base + '&start_at=' + 
-        from + '&end_at=' + to + '&symbols=' + currency);
+    return this.http.get('https://api.exchangeratesapi.io/history?base=' + base + '&start_at='+ 
+        from +'&end_at=' + to + '&symbols=' + currency);
   }
 
   getCrossRates(countries, base) {
