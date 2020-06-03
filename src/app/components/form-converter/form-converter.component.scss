@@ -58,6 +58,16 @@ input {
   height: 58px;
 }
 
+.dropdown-menu {
+  max-height: 300px !important;
+  overflow-y: scroll !important;
+
+}
+
+.drop {
+  background-color:#f1f1f1;
+}
+
 select {
   border: none;
   background-color: #f1f1f1;
@@ -100,9 +110,9 @@ button {
   cursor: pointer;
 }
 
-.active {
-  background-color: #df6c4f !important;
-}
+// .active {
+//   background-color: #df6c4f !important;
+// }
 
 // custom select box
 /*the container must be positioned relative:*/

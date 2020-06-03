@@ -1,42 +1,50 @@
 import { Component, OnInit } from '@angular/core';
 import { CalcService } from '../../services/calc.service'
 import { ApiService } from 'src/app/services/api.service';
-import { Currencies } from 'src/app/interfaces/currencies.interface';
 
 @Component({
   selector: 'app-form-converter',
   templateUrl: './form-converter.component.html',
   styleUrls: ['./form-converter.component.scss'],
-  providers: [ CalcService ]
+  providers: [CalcService]
 })
 export class FormConverterComponent implements OnInit {
 
-  data = null;
-  rates = null;
-  imagesSRC = null;
+  currencyNames = [
+    "PLN", "CAD", "HKD", "ISK", "PHP", "DKK", "HUF", "CZK",
+    "AUD", "RON", "SEK", "IDR", "INR", "BRL", "RUB", "HRK",
+    "JPY", "THB", "CHF", "SGD", "BGN", "TRY", "CNY", "NOK",
+    "NZD", "ZAR", "USD", "MXN", "ILS", "GBP", "KRW", "MYR",
+    "EUR"
+  ];
+  imgFlagsFolder = "../../../assets/images/flags/";
   periods = ['7 days', '1 month', '1 year', '5 years'];
+
+  data = null;
+  period = null;
   currentIndex = 0;
 
-  period;
-  
-  constructor(private apiServise: ApiService) {}
+  defaultCurrencySource = this.currencyNames[0];
+  currencySource = this.defaultCurrencySource;
+  currencySourceSrc = this.imgFlagsFolder + this.defaultCurrencySource.toLowerCase() + ".png";
+
+  constructor(private apiServise: ApiService) { }
 
   ngOnInit(): void {
     this.period = this.periods[this.currentIndex];
-    
-    this.apiServise.getLatestRates().subscribe((json: Currencies) => {
-      this.rates = json.rates;
-      let map = {};
-      for (let currency of Object.keys(this.rates)) {
-        map[currency] = "../../../assets/images/flags/" + currency + ".png";
-      }
-      this.data = map;
-    })
+    this.data = {};
+    for (let currency of this.currencyNames) {
+      this.data[currency] = this.imgFlagsFolder + currency.toLowerCase() + ".png";
+    }
   }
 
   handleClick(index) {
-    this.currentIndex = index;   
+    this.currentIndex = index;
     this.period = this.periods[this.currentIndex];
   }
 
+  selectCurrency(value) {
+    this.currencySource = value;
+    this.currencySourceSrc = this.imgFlagsFolder + value.toLowerCase() + ".png";
+  }
 }

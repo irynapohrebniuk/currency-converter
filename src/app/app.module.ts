@@ -13,6 +13,7 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
 import { LatestRatesComponent } from './components/latest-rates/latest-rates.component';
 import { RateDynamicsComponent } from './components/rate-dynamics/rate-dynamics.component';
 import { CalcService } from './services/calc.service';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CalcService } from './services/calc.service';
     CrossRatesComponent,
     LineChartComponent,
     LatestRatesComponent,
-    RateDynamicsComponent
+    RateDynamicsComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

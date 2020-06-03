@@ -8,6 +8,7 @@ import { RateDynamicsComponent } from './components/rate-dynamics/rate-dynamics.
 
 
 const routes: Routes = [
+  { path: '', component: FormConverterComponent  },
   { path: 'home', component: FormConverterComponent  },
   { path: 'crossrates', component: CrossRatesComponent },
   { path: 'linechart', component: LineChartComponent },
@@ -19,4 +20,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

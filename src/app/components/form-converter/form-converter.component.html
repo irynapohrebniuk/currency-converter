@@ -6,19 +6,18 @@
                 <div class="input">
                     <input value="">
                 </div>
-                
-                    <div ngbDropdown class="d-inline-block">
+                <div ngbDropdown class="d-inline-block">
                         <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
-                            Currency
+                            <span><img src="{{currencySourceSrc}}" height="24px" width="24px"></span>
+                              {{currencySource}}
                         </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                          <button ngbDropdownItem *ngFor="let currency of data | keyvalue">
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
+                          <button ngbDropdownItem *ngFor="let currency of data | keyvalue" value="{{currency.key}}" (click)="selectCurrency($event.target.value)">
                               <span><img src="{{currency.value}}" height="24px" width="24px"></span>
                               {{currency.key}}
                             </button>
                         </div>
                     </div>
-                    
                 <div class="footer">1 USD = 26.765 UAH</div>
             </label>
         </div>
@@ -36,12 +35,17 @@
                     Currency I want
                 </div>
                 <input value="">
-                <div class="custom-select">
-                    <select id="country" name="country">
-                        <option value="australia"><span>USD</span>Australia</option>
-                        <option value="canada"><span>USD</span>Canada</option>
-                        <option value="usa"><span>USD</span>USA</option>
-                    </select>
+                <div ngbDropdown class="d-inline-block">
+                    <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
+                        <span><img src="{{currencySourceSrc}}" height="24px" width="24px"></span>
+                          {{currencySource}}
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
+                      <button ngbDropdownItem *ngFor="let currency of data | keyvalue" value="{{currency.key}}" (click)="selectCurrency($event.target.value)">
+                          <span><img src="{{currency.value}}" height="24px" width="24px"></span>
+                          {{currency.key}}
+                        </button>
+                    </div>
                 </div>
                 <div class="footer">
                     1 UAH = 0.0374 USD
@@ -51,13 +55,11 @@
     </div>
 </div>
 
-    <div class="btn-group btn-group-toggle m-2">
-        <div *ngFor="let period of periods; let i = index" 
-                [class.active] = "currentIndex === i"
-                class='btn btn-light' 
-                (click)="handleClick(i)">
-            {{period}}
-        </div>
+<div class="btn-group btn-group-toggle m-2">
+    <div *ngFor="let period of periods; let i = index" [class.active]="currentIndex === i" class='btn btn-light'
+        (click)="handleClick(i)">
+        {{period}}
     </div>
+</div>
 
 <app-rate-dynamics [period]='period'></app-rate-dynamics>

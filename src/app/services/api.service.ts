@@ -21,6 +21,21 @@ export class ApiService {
   }
 
   // https://api.exchangeratesapi.io/history?base=PLN&start_at=2018-01-01&end_at=2018-09-01&symbols=USD
+  // getRatesFromPeriod(base, currency,from,to) {
+  //   // Result contains 4 attributes ("base", "rates", "start_at", "end_at")
+  //   let result = this.http.get('https://api.exchangeratesapi.io/history?base=' + base + '&start_at='+ 
+  //       from +'&end_at=' + to + '&symbols=' + currency);
+  //   // Extract "rates" attribute
+  //   let rates = result["rates"]
+  //   Object.entries(rates)
+  //   for (const rate in rates) {
+  //     if (rates.hasOwnProperty(rate)) {
+  //       const element = rates[rate];
+        
+  //     }
+  //   }
+  // }
+
   getRatesFromPeriod(base, currency,from,to) {
     return this.http.get('https://api.exchangeratesapi.io/history?base=' + base + '&start_at='+ 
         from +'&end_at=' + to + '&symbols=' + currency);

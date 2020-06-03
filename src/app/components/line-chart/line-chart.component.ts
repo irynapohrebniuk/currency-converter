@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
-import { RateDynamicsComponent } from '../rate-dynamics/rate-dynamics.component';
+import { DynamicRate } from '../../interfaces/dynamic-rate.interface';
 
 @Component({
   selector: 'app-line-chart',
@@ -10,47 +10,43 @@ import { RateDynamicsComponent } from '../rate-dynamics/rate-dynamics.component'
 })
 
 export class LineChartComponent implements OnChanges {
-  @Input() data: RateDynamicsComponent;
+  @Input() dataForChart: DynamicRate;
 
   dates = [];
   rates = [];
-  lineChartData: ChartDataSets[] = [
-    { data: [85, 72, 78, 75, 77, 75], label: 'Crude oil prices' },
-  ];
-
-  lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June'];
-
-  // lineChartData: ChartDataSets[] = [{ data: this.rates, label: 'Rates' }];
-
-  // lineChartLabels: Label[] = this.dates;
-
+  lineChartData: ChartDataSets[];
+  lineChartLabels: Label[];
   lineChartOptions = {
     responsive: true,
-    
   };
-
-  lineChartColors: Color[] = [
+  lineChartColors = [
     {
       borderColor: 'black',
       backgroundColor: 'rgba(255,255,0,0.28)',
     },
   ];
-
   lineChartLegend = true;
   lineChartPlugins = [];
   lineChartType = 'line';
 
+
   ngOnChanges() {
-    
-    // if (this.data) {
-    //   let dates = Object.keys(this.data);
-    //   let rates = Object.values(this.data);
-    //   let roundedRates = rates.map((rate => rate.toFixed(2)));
-    //   this.lineChartData = [{ data: roundedRates, label: 'Rates' }];
-    //   this.lineChartLabels = dates;
-    //   // console.log("dates", dates);
-    //   // console.log("rates", rates);
-    //   }
+    this.collectData();
+    this.lineChartData = [{ data: this.rates, label: 'Rates' }];
+    this.lineChartLabels = this.dates;
+  }
+
+  collectData() {
+    let dates = Object.keys(this.dataForChart.rates);
+    let ratesTmp = Object.values(this.dataForChart.rates);
+    let rateValues = [];
+    for (let i in ratesTmp) {
+      let temp = ratesTmp[i];
+      let value = Object.values(temp)[0];
+      rateValues.push(value);
     }
-  
+    this.rates = rateValues;
+    this.dates = dates;
+  }
+
 }
