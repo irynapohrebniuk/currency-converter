@@ -11,7 +11,8 @@ import { Currencies } from 'src/app/interfaces/currencies.interface';
 })
 export class FormConverterComponent implements OnInit {
 
-  currencies = null;
+  data = null;
+  rates = null;
   imagesSRC = null;
   periods = ['7 days', '1 month', '1 year', '5 years'];
   currentIndex = 0;
@@ -24,12 +25,12 @@ export class FormConverterComponent implements OnInit {
     this.period = this.periods[this.currentIndex];
     
     this.apiServise.getLatestRates().subscribe((json: Currencies) => {
-      let rates = json.rates;
+      this.rates = json.rates;
       let map = {};
-      for (let currency of Object.keys(rates)) {
+      for (let currency of Object.keys(this.rates)) {
         map[currency] = "../../../assets/images/flags/" + currency + ".png";
       }
-      this.currencies = map;
+      this.data = map;
     })
   }
 

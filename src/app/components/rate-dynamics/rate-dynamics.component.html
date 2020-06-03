@@ -1,8 +1,8 @@
 
-
+<div *ngIf="data">
 <p>Exchange Rate Dynamics for last {{period}}</p>
 
-<table class="table table-striped" *ngIf="data">
+<table class="table table-striped" >
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -13,13 +13,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data | keyvalue">
-      <th scope="row">{{ item.key }}</th>
+    <tr *ngFor="let item of items ">
+      <th scope="row">{{ item.date }}</th>
       <td>
-        {{ item.value | number: '1.2-2' }}
+        {{ item.rate | number: '1.2-2' }}
       </td>
       <td>
-        {{ item.value * 100 | number: '1.2-2' }}
+        {{ item.rate * 100 | number: '1.2-2' }}
       </td>
     </tr>
   </tbody>
@@ -27,12 +27,13 @@
 
 
 <div class="d-flex justify-content-between p-2">
-  <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+  <ngb-pagination [collectionSize]="collectionSize" 
+                  [(page)]="page" [pageSize]="pageSize" [maxSize]="maxSize">
   </ngb-pagination>
 
-  <select class="custom-select" style="width: auto">
-    <option [value]="2">2 items per page</option>
-    <option [value]="4">4 items per page</option>
-    <option [value]="6">6 items per page</option>
+  <select class="custom-select" style="width: auto" (change)="setPageSize($event.target.value)">
+    <option *ngFor="let item of pageItems" value="{{item}}">{{item}} items per page</option>
   </select>
+</div>
+<app-line-chart [data]="data"></app-line-chart>
 </div>

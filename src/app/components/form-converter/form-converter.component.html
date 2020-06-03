@@ -1,4 +1,4 @@
-<div class="container" *ngIf="currencies">
+<div class="container" *ngIf="data">
     <div class="row align-items-center">
         <div class="col">
             <label>
@@ -12,7 +12,7 @@
                             Currency
                         </button>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                          <button ngbDropdownItem *ngFor="let currency of currencies | keyvalue">
+                          <button ngbDropdownItem *ngFor="let currency of data | keyvalue">
                               <span><img src="{{currency.value}}" height="24px" width="24px"></span>
                               {{currency.key}}
                             </button>
