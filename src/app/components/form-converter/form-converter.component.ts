@@ -17,7 +17,7 @@ export class FormConverterComponent implements OnInit {
     "NZD", "ZAR", "USD", "MXN", "ILS", "GBP", "KRW", "MYR",
     "EUR"
   ];
-  imgFlagsFolder = "../../../assets/images/flags/";
+  imgFlagsFolder = "../../../assets/images/country_flags/";
   periods = ['7 days', '1 month', '1 year', '5 years'];
 
   data = null;
