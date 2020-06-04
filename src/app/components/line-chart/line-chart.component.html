@@ -1,6 +1,7 @@
-<div>My first chart</div>
-
-<div style="width: 100%;" *ngIf="dataForChart">
+<section>
+    <div class="title">Exchange rate dynamics chart</div>
+    
+<div class="chart" *ngIf="dataForChart; else loader">
     <canvas baseChart 
         [datasets]="lineChartData" 
         [labels]="lineChartLabels" 
@@ -11,3 +12,8 @@
         [plugins]="lineChartPlugins">
     </canvas>
 </div>
+
+<ng-template #loader>
+    <div className="loader">Łoading data...</div>
+</ng-template>
+</section>

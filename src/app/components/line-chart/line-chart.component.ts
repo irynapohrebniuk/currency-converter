@@ -18,13 +18,24 @@ export class LineChartComponent implements OnChanges {
   lineChartLabels: Label[];
   lineChartOptions = {
     responsive: true,
-  };
+    legend: {
+      display: true,
+      legend: {
+        fontSize: 14
+    }
+    }
+  }
+
   lineChartColors = [
     {
-      borderColor: 'black',
-      backgroundColor: 'rgba(255,255,0,0.28)',
-    },
+      borderWidth: 1,
+      borderColor: '#007BFF',
+      backgroundColor: '#d3d9df',
+      pointRadius: 2,
+      pointBackgroundColor: '#007BFF'
+    }
   ];
+
   lineChartLegend = true;
   lineChartPlugins = [];
   lineChartType = 'line';

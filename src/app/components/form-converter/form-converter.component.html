@@ -12,9 +12,9 @@
                               {{currencySource}}
                         </button>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
-                          <button ngbDropdownItem *ngFor="let currency of data | keyvalue" value="{{currency.key}}" (click)="selectCurrency($event.target.value)">
-                              <span><img src="{{currency.value}}" height="24px" width="24px"></span>
-                              {{currency.key}}
+                          <button ngbDropdownItem *ngFor="let currencySource of data | keyvalue" value="{{currencySource.key}}" (click)="selectCurrencySource($event.target.value)">
+                              <span><img src="{{currencySource.value}}" height="24px" width="24px"></span>
+                              {{currencySource.key}}
                             </button>
                         </div>
                     </div>
@@ -37,13 +37,13 @@
                 <input value="">
                 <div ngbDropdown class="d-inline-block">
                     <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
-                        <span><img src="{{currencySourceSrc}}" height="24px" width="24px"></span>
-                          {{currencySource}}
+                        <span><img src="{{currencyTargetSrc}}" height="24px" width="24px"></span>
+                          {{currencyTarget}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
-                      <button ngbDropdownItem *ngFor="let currency of data | keyvalue" value="{{currency.key}}" (click)="selectCurrency($event.target.value)">
-                          <span><img src="{{currency.value}}" height="24px" width="24px"></span>
-                          {{currency.key}}
+                      <button ngbDropdownItem *ngFor="let currencyTarget of data | keyvalue" value="{{currencyTarget.key}}" (click)="selectCurrencyTarget($event.target.value)">
+                          <span><img src="{{currencyTarget.value}}" height="24px" width="24px"></span>
+                          {{currencyTarget.key}}
                         </button>
                     </div>
                 </div>

@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CalcService } from '../../services/calc.service'
-import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-form-converter',
   templateUrl: './form-converter.component.html',
   styleUrls: ['./form-converter.component.scss'],
-  providers: [CalcService]
+  providers: []
 })
 export class FormConverterComponent implements OnInit {
 
@@ -17,6 +15,9 @@ export class FormConverterComponent implements OnInit {
     "NZD", "ZAR", "USD", "MXN", "ILS", "GBP", "KRW", "MYR",
     "EUR"
   ];
+
+
+
   imgFlagsFolder = "../../../assets/images/country_flags/";
   periods = ['7 days', '1 month', '1 year', '5 years'];
 
@@ -25,10 +26,17 @@ export class FormConverterComponent implements OnInit {
   currentIndex = 0;
 
   defaultCurrencySource = this.currencyNames[0];
-  currencySource = this.defaultCurrencySource;
-  currencySourceSrc = this.imgFlagsFolder + this.defaultCurrencySource.toLowerCase() + ".png";
+  defaultCurrencyTarget = this.currencyNames[32];
 
-  constructor(private apiServise: ApiService) { }
+  currencySourceSrc =  this.imgFlagsFolder + this.defaultCurrencySource.toLowerCase() + ".png";
+  currencyTargetSrc = this.imgFlagsFolder + this.defaultCurrencyTarget.toLowerCase() + ".png";
+  
+  currencySource = this.defaultCurrencySource;
+  currencyTarget = this.defaultCurrencyTarget;
+  
+  currencySrc = (val) => this.imgFlagsFolder + val.toLowerCase() + ".png";
+
+  constructor() { }
 
   ngOnInit(): void {
     this.period = this.periods[this.currentIndex];
@@ -43,8 +51,13 @@ export class FormConverterComponent implements OnInit {
     this.period = this.periods[this.currentIndex];
   }
 
-  selectCurrency(value) {
+  selectCurrencySource(value) {
     this.currencySource = value;
     this.currencySourceSrc = this.imgFlagsFolder + value.toLowerCase() + ".png";
+  }
+
+  selectCurrencyTarget(value) {
+    this.currencyTarget = value;
+    this.currencyTargetSrc = this.imgFlagsFolder + value.toLowerCase() + ".png";
   }
 }
