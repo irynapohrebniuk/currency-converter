@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { ChartDataSets, ChartOptions } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
-import { DynamicRate } from '../../interfaces/dynamic-rate.interface';
+import { ChartDataSets} from 'chart.js';
+import { Label } from 'ng2-charts';
 
 @Component({
   selector: 'app-line-chart',
@@ -10,54 +9,60 @@ import { DynamicRate } from '../../interfaces/dynamic-rate.interface';
 })
 
 export class LineChartComponent implements OnChanges {
-  @Input() dataForChart: DynamicRate;
+  @Input() dataForChart: Map<string, any>;
 
+  // Template binding: chart x-axis (dates) and y-axis (rates)
   dates = [];
   rates = [];
+
+  // Template binding: chart configuration
   lineChartData: ChartDataSets[];
   lineChartLabels: Label[];
   lineChartOptions = {
+    elements: {
+      line: {
+          tension: 0 // disables bezier curves
+      }
+    },
     responsive: true,
     legend: {
-      display: true,
+      display: false,
       legend: {
         fontSize: 14
-    }
+      }
     }
   }
-
   lineChartColors = [
     {
       borderWidth: 1,
       borderColor: '#007BFF',
       backgroundColor: '#d3d9df',
-      pointRadius: 2,
+      pointRadius: 1,
       pointBackgroundColor: '#007BFF'
     }
   ];
 
-  lineChartLegend = true;
   lineChartPlugins = [];
   lineChartType = 'line';
 
 
   ngOnChanges() {
-    this.collectData();
+    this.generateChartData();
     this.lineChartData = [{ data: this.rates, label: 'Rates' }];
     this.lineChartLabels = this.dates;
   }
 
-  collectData() {
-    let dates = Object.keys(this.dataForChart.rates);
-    let ratesTmp = Object.values(this.dataForChart.rates);
-    let rateValues = [];
-    for (let i in ratesTmp) {
-      let temp = ratesTmp[i];
-      let value = Object.values(temp)[0];
-      rateValues.push(value);
+  private generateChartData(): void {
+    let dates = [];
+    let rates = [];
+    for (const key of this.dataForChart.keys()) {
+      let rateObject = this.dataForChart.get(key);
+      let value = rateObject[Object.keys(rateObject)[0]];
+      dates.push(key)
+      rates.push(value);
     }
-    this.rates = rateValues;
     this.dates = dates;
+    this.rates = rates;
   }
 
 }

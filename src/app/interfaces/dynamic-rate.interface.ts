@@ -1,7 +1,5 @@
 export interface DynamicRate {
-    "rates" : {
-        date : {"name": number}
-    }
-    "base": string,
-    "date": string
+    "rates": Map<string,any>
+    "base" : string,
+    "date" : string
 }

@@ -1,19 +1,12 @@
 <section>
     <div class="title">Exchange rate dynamics chart</div>
-    
-<div class="chart" *ngIf="dataForChart; else loader">
-    <canvas baseChart 
-        [datasets]="lineChartData" 
-        [labels]="lineChartLabels" 
-        [options]="lineChartOptions"
-        [colors]="lineChartColors" 
-        [legend]="lineChartLegend" 
-        [chartType]="lineChartType" 
-        [plugins]="lineChartPlugins">
-    </canvas>
-</div>
-
-<ng-template #loader>
-    <div className="loader">Łoading data...</div>
-</ng-template>
+    <div class="chart">
+        <canvas baseChart 
+            [datasets]="lineChartData" 
+            [labels]="lineChartLabels" 
+            [options]="lineChartOptions"
+            [colors]="lineChartColors" 
+            [chartType]="lineChartType">
+        </canvas>
+    </div>
 </section>
