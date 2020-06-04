@@ -1,48 +1,41 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-form-converter',
   templateUrl: './form-converter.component.html',
   styleUrls: ['./form-converter.component.scss'],
-  providers: []
 })
+
 export class FormConverterComponent implements OnInit {
+  
+  constructor(private apiService: ApiService) { }
 
-  currencyNames = [
-    "PLN", "CAD", "HKD", "ISK", "PHP", "DKK", "HUF", "CZK",
-    "AUD", "RON", "SEK", "IDR", "INR", "BRL", "RUB", "HRK",
-    "JPY", "THB", "CHF", "SGD", "BGN", "TRY", "CNY", "NOK",
-    "NZD", "ZAR", "USD", "MXN", "ILS", "GBP", "KRW", "MYR",
-    "EUR"
-  ];
-
-
-
-  imgFlagsFolder = "../../../assets/images/country_flags/";
-  periods = ['7 days', '1 month', '1 year', '5 years'];
-
+  // Template binding
   data = null;
-  period = null;
+  period: string;
+  periods: string[];
   currentIndex = 0;
-
-  defaultCurrencySource = this.currencyNames[0];
-  defaultCurrencyTarget = this.currencyNames[32];
-
-  currencySourceSrc =  this.imgFlagsFolder + this.defaultCurrencySource.toLowerCase() + ".png";
-  currencyTargetSrc = this.imgFlagsFolder + this.defaultCurrencyTarget.toLowerCase() + ".png";
+  currencyNames: string[];
+  currencySource: string;
+  currencyTarget: string;
+  currencySourceSrc: string;
+  currencyTargetSrc: string;
   
-  currencySource = this.defaultCurrencySource;
-  currencyTarget = this.defaultCurrencyTarget;
   
-  currencySrc = (val) => this.imgFlagsFolder + val.toLowerCase() + ".png";
-
-  constructor() { }
-
   ngOnInit(): void {
+    this.currencyNames = this.apiService.getCurrencyNames();
+    this.periods = this.apiService.getPeriodNames();
+    this.currencySource = this.apiService.getDefaultSourceCurrency();
+    this.currencySourceSrc = this.apiService.getFlagImgSrc(this.currencySource);
+    this.currencyTarget = this.apiService.getDefaultTargetCurrency();
+    this.currencyTargetSrc = this.apiService.getFlagImgSrc(this.currencyTarget);
+    
     this.period = this.periods[this.currentIndex];
-    this.data = {};
-    for (let currency of this.currencyNames) {
-      this.data[currency] = this.imgFlagsFolder + currency.toLowerCase() + ".png";
+    this.data = new Map();
+    for (let index = 0; index < this.currencyNames.length; index++) {
+        const currency = this.currencyNames[index];
+        this.data.set(currency, this.apiService.getFlagImgSrc(currency));
     }
   }
 
@@ -53,11 +46,11 @@ export class FormConverterComponent implements OnInit {
 
   selectCurrencySource(value) {
     this.currencySource = value;
-    this.currencySourceSrc = this.imgFlagsFolder + value.toLowerCase() + ".png";
+    this.currencySourceSrc = this.apiService.getFlagImgSrc(value);
   }
 
   selectCurrencyTarget(value) {
     this.currencyTarget = value;
-    this.currencyTargetSrc = this.imgFlagsFolder + value.toLowerCase() + ".png";
+    this.currencyTargetSrc = this.apiService.getFlagImgSrc(value);
   }
 }
