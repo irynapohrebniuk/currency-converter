@@ -1,56 +1,62 @@
 <section>
-    <div class="container" *ngIf="data">
+    <div class="converter" *ngIf="data">
         <div class="row align-items-center">
             <div class="col">
                 <label>
-                    <div class="header">Currency I have</div>
-                    <div class="input">
-                        <input value="">
+                    <div class="input-header left">Currency I have</div>
+                    <div class="input-content">
+                        <input value="" class="d-inline-block">
                     </div>
                     <div ngbDropdown class="d-inline-block">
                         <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
-                            <span><img src="{{currencySourceSrc}}" height="24px" width="24px"></span>
                             {{currencySource}}
+                            <span><img src="{{currencySourceSrc}}" class="flag"></span>
                         </button>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
                             <button ngbDropdownItem *ngFor="let currencySource of data | keyvalue"
                                 value="{{currencySource.key}}" (click)="selectCurrencySource($event.target.value)">
-                                <span><img src="{{currencySource.value}}" height="24px" width="24px"></span>
                                 {{currencySource.key}}
+                                <span><img src="{{currencySource.value}}" class="flag"></span>
                             </button>
                         </div>
                     </div>
-                    <div class="footer">1 USD = 26.765 UAH</div>
+                    <div class="input-footer left">1 USD = 26.765 UAH</div>
                 </label>
             </div>
 
-            <div class="col-icon">
+            <div>
                 <button>
                     <span>
+                        <img src="../../../assets/images/icons/exchange (1).png">
                     </span>
                 </button>
             </div>
 
             <div class="col">
                 <label>
-                    <div class="header">
+                    <div class="input-header left">
                         Currency I want
                     </div>
-                    <input value="">
-                    <div ngbDropdown class="d-inline-block">
-                        <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
-                            <span><img src="{{currencyTargetSrc}}" height="24px" width="24px"></span>
-                            {{currencyTarget}}
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
-                            <button ngbDropdownItem *ngFor="let currencyTarget of data | keyvalue"
-                                value="{{currencyTarget.key}}" (click)="selectCurrencyTarget($event.target.value)">
-                                <span><img src="{{currencyTarget.value}}" height="24px" width="24px"></span>
-                                {{currencyTarget.key}}
+                    <div>
+                        <div class="d-inline-block input-content">
+                            <input value="">
+                        </div>
+                        <div ngbDropdown class="d-inline-block">
+                            <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
+                                {{currencyTarget}}
+                                <span><img src="{{currencyTargetSrc}}" class="flag"></span>
                             </button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
+                                <button ngbDropdownItem *ngFor="let currencyTarget of data | keyvalue"
+                                    value="{{currencyTarget.key}}" (click)="selectCurrencyTarget($event.target.value)">
+                                    {{currencyTarget.key}}
+                                    <span><img src="{{currencyTarget.value}}" class="flag"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="footer">
+
+                    <div class="input-footer left">
                         1 UAH = 0.0374 USD
                     </div>
                 </label>
