@@ -3,6 +3,7 @@ import { DynamicRate } from '../../interfaces/dynamic-rate.interface';
 import { FormConverterComponent } from '../form-converter/form-converter.component'
 import { CalcService } from 'src/app/services/calc.service';
 import { ApiService } from '../../services/api.service';
+import { Periods } from 'src/app/services/periods.enum';
 
 @Component({
   selector: 'app-rate-dynamics',
@@ -30,6 +31,7 @@ export class RateDynamicsComponent implements OnChanges {
   
 
   constructor(private apiService: ApiService, private calcService: CalcService) {
+    console.log("Period is ", this.period);
     this.from = this.calcService.calculateFrom(this.period);
     this.to = this.calcService.calculateTo();
     this.updateRates();
@@ -38,7 +40,7 @@ export class RateDynamicsComponent implements OnChanges {
   updateRates() {
     console.log("rates:", this.base, this.currency, this.period);
     this.apiService
-      .getRatesFromPeriod(this.base, this.currency, this.from, this.to)
+      .getRatesFromPeriod(this.base, this.currency, this.from, this.to, this.period)
       .subscribe((result: DynamicRate) => {
         this.dataForChart = this.getSortedRates(result.rates);
         let ratesMap = this.dataForChart;

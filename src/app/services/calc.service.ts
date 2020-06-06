@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Periods } from './periods.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -17,18 +18,17 @@ export class CalcService {
     }
 
     calculateFrom(period) {
-
         switch (period) {
-            case '7 days': {
+            case Periods.SEVEN_DAYS: {
                 return this.getDate7DaysBefore();
             }
-            case '1 month': {
+            case Periods.ONE_MONTH: {
                 return this.getDateMonthBefore();
             }
-            case '1 year': {
+            case Periods.ONE_YEAR: {
                 return this.getDateYearBefore();
             }
-            case '5 years': {
+            case Periods.FIVE_YEARS: {
                 return this.getDate5YearsBefore();
             }
             default: {
