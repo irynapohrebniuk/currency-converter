@@ -11,8 +11,8 @@ import { ApiService } from '../../services/api.service';
 })
 export class RateDynamicsComponent implements OnChanges {
   @Input() period: FormConverterComponent;
-
-  private base = 'USD';
+  @Input() base: string;
+  @Input() currency: string;
   
   private from;
   private to;
@@ -27,7 +27,7 @@ export class RateDynamicsComponent implements OnChanges {
   dataForChart;
   slicedData;
   collectionSize;
-  currency = 'RON';
+  
 
   constructor(private apiService: ApiService, private calcService: CalcService) {
     this.from = this.calcService.calculateFrom(this.period);
@@ -36,6 +36,7 @@ export class RateDynamicsComponent implements OnChanges {
   }
 
   updateRates() {
+    console.log("rates:", this.base, this.currency, this.period);
     this.apiService
       .getRatesFromPeriod(this.base, this.currency, this.from, this.to)
       .subscribe((result: DynamicRate) => {

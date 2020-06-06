@@ -14,6 +14,7 @@ import { LatestRatesComponent } from './components/latest-rates/latest-rates.com
 import { RateDynamicsComponent } from './components/rate-dynamics/rate-dynamics.component';
 import { CalcService } from './services/calc.service';
 import { FooterComponent } from './footer/footer.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FooterComponent } from './footer/footer.component';
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    ChartsModule
+    ChartsModule,
+    FormsModule
   ],
   providers: [ApiService, CalcService],
   bootstrap: [AppComponent]

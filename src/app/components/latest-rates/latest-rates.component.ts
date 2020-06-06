@@ -19,8 +19,8 @@ export class LatestRatesComponent implements OnInit {
 
   }
 
-  getLatestRates() {
-    this.apiService.getLatestRates().subscribe(json => this.data = json)
-  }
+  // getLatestRates() {
+  //   this.apiService.getLatestRates().subscribe(json => this.data = json)
+  // }
 
 }
