@@ -49,6 +49,7 @@ export class FormConverterComponent implements OnInit {
   keyupCurrencyAmount(value) {
     this.currencySourceAmount = value;
     this.currencyTargetAmount = (this.currencySourceAmount * this.baseToTarget);
+    if (value = '') this.currencySourceAmount = 0;
   }
 
   handleClick(index) {

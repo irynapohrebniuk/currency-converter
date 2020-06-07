@@ -1,5 +1,5 @@
 <section>
-  <div *ngIf="data; else loader">
+  <div *ngIf="slicedData; else loader">
     <div class="title">Exchange Rate Dynamics for last {{period}}</div>
     <div class="table-content">
       <table class="table table-striped">
@@ -27,7 +27,10 @@
     </div>
 
     <div class="d-flex justify-content-between p-2">
-      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" [maxSize]="maxSize">
+      <ngb-pagination [collectionSize]="collectionSize" 
+                      [(page)]="page" 
+                      [pageSize]="pageSize" 
+                      [maxSize]="maxSize" (pageChange)="updateSlicedData()">
       </ngb-pagination>
 
       <select class="custom-select" style="width: auto" (change)="setPageSize($event.target.value)">

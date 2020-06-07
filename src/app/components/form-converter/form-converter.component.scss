@@ -37,18 +37,19 @@ body {
   display: inline-block;
   padding-right: 10px;
   padding-left: 10px;
-  border-bottom: 1px solid black;
+  // border-bottom: 1px solid black;
 }
 
-input[type=text] {
+input {
   display: inline-block;
   border: none;
   font-size: 26px;
   font-weight: 800;
-  padding-top: 2px;
+  padding: 6px;
   outline: none;
-  background-color: #f1f1f1;
-  color: black !important;
+  background-color:red;
+  border: 1px solid black;
+  height: 60px;
   &:hover {
     border: none;
     outline: none;
@@ -67,6 +68,12 @@ input[type=text] {
 .dropdown-menu {
   max-height: 300px !important;
   overflow-y: scroll !important;
+  background-color: green($color: #000000);
+}
+
+.dropdown {
+  border: 1px solid black;
+  margin-top: 0px;
 }
 
 .drop {

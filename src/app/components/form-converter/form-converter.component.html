@@ -6,22 +6,22 @@
                     <label>
                         <div class="input-header left">Currency I have</div>
                         <div class="input-content">
-                            <input type="text" name="amount" #amount="ngModel" ngModel
-                                placeholder="{{currencySourceAmount}}" (keyup)="keyupCurrencyAmount(amount.value)"
-                                class="d-inline-block">
-                        </div>
-                        <div ngbDropdown class="d-inline-block">
-                            <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
-                                {{currencySource}}
-                                <span><img src="{{currencySourceSrc}}" class="flag"></span>
-                            </button>
-                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
-                                <button ngbDropdownItem *ngFor="let currencySource of data | keyvalue"
-                                    value="{{currencySource.key}}" (click)="selectCurrencySource($event)">
-                                    {{currencySource.key}}
-                                    <img src="{{currencySource.value}}" class="flag">
+                            <input type="number" name="amount" #amount="ngModel" ngModel placeholder="100"
+                                (keyup)="keyupCurrencyAmount(amount.value)" class="d-inline-block">
+                            <div ngbDropdown class="d-inline-block">
+                                <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
+                                    {{currencySource}}
+                                    <span><img src="{{currencySourceSrc}}" class="flag"></span>
                                 </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
+                                    <button ngbDropdownItem *ngFor="let currencySource of data | keyvalue"
+                                        value="{{currencySource.key}}" (click)="selectCurrencySource($event)">
+                                        {{currencySource.key}}
+                                        <img src="{{currencySource.value}}" class="flag">
+                                    </button>
+                                </div>
                             </div>
+
                         </div>
                         <div class="input-footer left">1 {{currencySource}} = {{ baseToTarget }} {{currencyTarget}}
                         </div>
