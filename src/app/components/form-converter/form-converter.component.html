@@ -5,8 +5,8 @@
                 <div class="column">
                     <div class="input-header left">From</div>
                     <div class="input-content">
-                        <input type="number" min="0" name="amount" #amount="ngModel" ngModel 
-                            (keyup)="keyupCurrencyAmount(amount.value)" class="d-inline-block" placeholder="{{currencySourceAmount}}">
+                        <input type="number" min="0" (keyup)="keyupCurrencyAmount($event.target.value)"
+                            class="d-inline-block" [(value)]="currencySourceAmount" placeholder="0">
 
                         <div ngbDropdown class="d-inline-block">
                             <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
@@ -40,7 +40,7 @@
                     <div class="input-header left">To</div>
                     <div class="input-content">
                         <input type="text" name="amountOutput" #amountOutput="ngModel" ngModel
-                                value="{{currencyTargetAmount}}" placeholder="{{currencyTargetAmount}}" readonly>
+                            value="{{currencyTargetAmount}}" placeholder="{{currencyTargetAmount}}" readonly>
                         <div ngbDropdown class="d-inline-block">
                             <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
                                 {{currencyTarget }}
