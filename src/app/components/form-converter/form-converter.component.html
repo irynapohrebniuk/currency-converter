@@ -1,12 +1,12 @@
 <div *ngIf="data; else loader">
     <section>
         <div class="converter">
-            <div>
+            <div class="converter-row">
                 <div class="column">
                     <div class="input-header left">From</div>
                     <div class="input-content">
-                        <input type="number" name="amount" #amount="ngModel" ngModel placeholder="100"
-                            (keyup)="keyupCurrencyAmount(amount.value)" class="d-inline-block">
+                        <input type="number" min="0" name="amount" #amount="ngModel" ngModel 
+                            (keyup)="keyupCurrencyAmount(amount.value)" class="d-inline-block" placeholder="{{currencySourceAmount}}">
 
                         <div ngbDropdown class="d-inline-block">
                             <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
@@ -27,12 +27,13 @@
                     </div>
                 </div>
 
-                <div class="column">
-                    <button>
+                <div class="column-icon">
+                    <button class="icon-exchange vertical-center"></button>
+                    <!-- <button>
                         <span>
                             <img src="../../../assets/images/icons/exchange (1).png">
                         </span>
-                    </button>
+                    </button> -->
                 </div>
 
                 <div class="column">
@@ -73,5 +74,5 @@
     <app-rate-dynamics [period]='period' [base]='currencySource' [currency]='currencyTarget'></app-rate-dynamics>
 </div>
 <ng-template #loader>
-    <div className="loader">Łoading data...</div>
+    <div className="loader">Loading data...</div>
 </ng-template>

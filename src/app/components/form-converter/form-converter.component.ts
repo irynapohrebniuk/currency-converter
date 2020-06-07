@@ -27,7 +27,7 @@ export class FormConverterComponent implements OnInit {
   currentIndex = 0;
   currencyNames: string[];
   currencySource: string;
-  currencySourceAmount = 100;
+  currencySourceAmount = 1;
   currencySourceSrc: string;
   currencyTarget: string;
   baseToTarget: number;
