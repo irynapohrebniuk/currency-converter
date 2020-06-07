@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, shareReplay } from 'rxjs/operators';
-import { throwError, Observable, of, EMPTY } from 'rxjs'
+import { throwError, Observable, EMPTY } from 'rxjs'
 import { Periods } from './periods.enum';
 
 @Injectable({
@@ -61,16 +61,28 @@ export class ApiService {
     return this.currencyNames[0];
   }
 
-  getLatestRates(base, currency): Observable<any> {
+  getAllLatestRates(base):Observable<any> {
+    return this.getLatestRates(base, null);
+  }
+
+  getLatestRates(base, currencies): Observable<any> {
     this.checkCacheHealth();
-    let requestString = 'https://api.exchangeratesapi.io/latest?base=' + base + '&symbols=' + currency;
-    console.debug("[Request to API]:", requestString);
+    // Get rates for all currencies
+    let requestString: string;
+    if (currencies == null) {
+      requestString = 'https://api.exchangeratesapi.io/latest?base=' + base;  
+    } else {
+      requestString = 'https://api.exchangeratesapi.io/latest?base=' + base + '&symbols=' + currencies;
+    }
+    console.debug("[REQST]", requestString);
     let cacheKey = this.getHashOfString(requestString);
     if (this.cache[cacheKey]) {
-      console.debug("Get the latest rates from cache [" + base + "/" + currency + "] for pair");
+      console.debug("[CACHE] Get the latest rates [base:" + base + "]" +
+                      (currencies == null ? "" :", currencies:" + currencies));
       return this.cache[cacheKey];
     }
-    console.debug("Get the latest rates for pair [" + base + "/" + currency + "] from source");
+    console.debug("[SOURCE] Get the latest rates [base:" + base + "]" +
+                      (currencies == null ? "" :", currencies:" + currencies));
     this.cache[cacheKey] = this.http.get(requestString)
       .pipe(
         shareReplay(1),
@@ -89,15 +101,14 @@ export class ApiService {
       + '&start_at=' + start_at
       + '&end_at=' + end_at
       + '&symbols=' + symbols;
-    console.debug("[Request to API]:", requestString);
-    // TODO: Redesign as default parameter
+    console.debug("[REQST]", requestString);
     if (periodType === Periods.SEVEN_DAYS || periodType == Periods.ONE_MONTH) {
       let cacheKey = this.getHashOfString(requestString);
       if (this.cache[cacheKey]) {
-        console.debug("Get rates for '" + periodType + "'[" + start_at + " ~ " + end_at + "] from cache");
+        console.debug("[CACHE] Get rates for '" + periodType + "'[" + start_at + " ~ " + end_at + "]");
         return this.cache[cacheKey];
       }
-      console.debug("Get rates for '" + periodType + "' [" + start_at + " ~ " + end_at + "] from source and add to cache")
+      console.debug("[SOURCE] Get rates for '" + periodType + "' [" + start_at + " ~ " + end_at + "]")
       this.cache[cacheKey] = this.http.get(requestString)
         .pipe(
           shareReplay(1),
@@ -109,8 +120,8 @@ export class ApiService {
         )
       return this.cache[cacheKey];
     }
-    console.debug("Get rates for '" + periodType +
-      "' [" + start_at + " ~" + end_at + "] from source without interaction with cache");
+    console.debug("[SOURCE] Get rates for '" + periodType +
+      "' [" + start_at + " ~" + end_at + "]");
     return this.http.get('https://api.exchangeratesapi.io/history?base=' + base + '&start_at=' +
       start_at + '&end_at=' + end_at + '&symbols=' + symbols).pipe(catchError(this.handleError));
   }
@@ -118,13 +129,13 @@ export class ApiService {
   getCrossRates(countries, base): Observable<any> {
     this.checkCacheHealth();
     let requestString = 'https://api.exchangeratesapi.io/latest?base=' + base + '&symbols=' + countries;
-    console.debug("[Request to API]:", requestString);
+    console.debug("[REQST]", requestString);
     let cacheKey = this.getHashOfString(requestString);
     if (this.cache[cacheKey]) {
-      console.debug("Get the cross rates for [" + countries + "] from cache");
+      console.debug("[CACHE] Get the cross rates for [" + countries + "]");
       return this.cache[cacheKey];
     }
-    console.debug("Get the cross rates for [" + countries + "] from source");
+    console.debug("[SOURCE] Get the cross rates for [" + countries + "]");
     this.cache[cacheKey] = this.http.get(requestString)
       .pipe(
         shareReplay(1),
@@ -159,17 +170,14 @@ export class ApiService {
     let cacheKeys = Object.keys(this.cache)
     const cacheSize = cacheKeys.length;
     if (cacheSize > this.cacheMaxSize) {
-      console.debug("Cache truncating is required, size is [" + cacheSize +
+      console.debug("[CACHE] Cache truncating is required, size is [" + cacheSize +
         "], allowable size is [" + this.cacheMaxSize + "]");
       // remove third part of cache
       for (let index = 0; index < 900; index++) {
         const key = cacheKeys[index];
         delete this.cache[key];
       }
-      console.debug("Cache size after truncate = [" + Object.keys(this.cache).length + "]");
-    } else {
-      console.debug("Truncate is not required, cache size is [" + cacheSize +
-        "], allowable size is [" + this.cacheMaxSize + "]");
+      console.debug("[CACHE] Cache size after truncate = [" + Object.keys(this.cache).length + "]");
     }
   }
 
@@ -180,14 +188,12 @@ export class ApiService {
       this.lastCacheCleanDate.getFullYear() == today.getFullYear();
     let cacheKeys = Object.keys(this.cache)
     if (!isToday) {
-      console.debug("A new day has come, cache invalidating is required")
+      console.debug("[CACHE] A new day has come, cache invalidating is required")
       for (let index = 0; index < cacheKeys.length; index++) {
         const key = cacheKeys[index];
         delete this.cache[key];
       }
-      console.debug("Cache size after cleanup is [" + Object.keys(this.cache).length + "]");
-    } else {
-      console.debug("Cache invalidating is not required throughout the day");
+      console.debug("[CACHE] Cache size after cleanup is [" + Object.keys(this.cache).length + "]");
     }
   }
 

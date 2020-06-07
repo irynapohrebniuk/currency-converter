@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service'
+import { DynamicRate } from 'src/app/interfaces/dynamic-rate.interface';
 
 @Component({
   selector: 'app-latest-rates',
@@ -7,20 +8,26 @@ import { ApiService } from '../../services/api.service'
   styleUrls: ['./latest-rates.component.scss']
 })
 export class LatestRatesComponent implements OnInit {
-  apiService: ApiService;
-  data = null;
+
+  latestRates;
 
 
-  constructor(apiService: ApiService) {
-    this.apiService = apiService;
-  }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-
+    // TODO: Pass "base" from template
+    this.apiService.getAllLatestRates("USD").subscribe((result: DynamicRate) => {
+      this.formatRates(result.rates);
+      this.latestRates = result;
+      
+    });
   }
 
-  // getLatestRates() {
-  //   this.apiService.getLatestRates().subscribe(json => this.data = json)
-  // }
+  private formatRates(rates): void {
+    Object.keys(rates).map(function(key, index) {
+      //TODO: It's too complex
+      rates[key] = Number(Number.parseFloat(rates[key]).toFixed(2));
+    });
+  }
 
 }

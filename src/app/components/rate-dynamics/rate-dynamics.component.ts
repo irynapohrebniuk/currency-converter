@@ -34,8 +34,7 @@ export class RateDynamicsComponent implements OnChanges {
     private calcService: CalcService) { }
 
   updateRates() {
-    this.apiService
-      .getRatesFromPeriod(this.base, this.currency, this.from, this.to, this.period)
+    this.apiService.getRatesFromPeriod(this.base, this.currency, this.from, this.to, this.period)
       .subscribe((result: DynamicRate) => {
         this.dataForChart = this.getSortedRates(result.rates);
         let ratesMap = this.dataForChart;
