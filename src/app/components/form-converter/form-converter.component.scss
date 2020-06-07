@@ -40,7 +40,7 @@ body {
   border-bottom: 1px solid black;
 }
 
-input {
+input[type=text] {
   display: inline-block;
   border: none;
   font-size: 26px;
@@ -48,6 +48,7 @@ input {
   padding-top: 2px;
   outline: none;
   background-color: #f1f1f1;
+  color: black !important;
   &:hover {
     border: none;
     outline: none;
@@ -55,6 +56,10 @@ input {
   &:focus {
     border: none;
     outline: none;
+  }
+  &::placeholder {
+    color:black;
+    opacity: 1;
   }
 }
 

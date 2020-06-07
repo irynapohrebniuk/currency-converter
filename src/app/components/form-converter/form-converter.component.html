@@ -1,89 +1,85 @@
-<section>
-    <div class="converter" *ngIf="data">
-        <div class="row align-items-center">
-            <div class="col">
-                <label>
-                    <div class="input-header left">Currency I have</div>
-                    <div class="input-content">
-                        <input name="amount" 
-                                #amount="ngModel" 
-                                ngModel placeholder="{{currencySourceAmount}}" 
-                                (keyup)="keyupCurrencyAmount(amount.value)" class="d-inline-block">
-                    </div>
-                    <div ngbDropdown class="d-inline-block">
-                        <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
-                            {{currencySource}}
-                            <span><img src="{{currencySourceSrc}}" class="flag"></span>
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
-                            <button ngbDropdownItem 
-                                    *ngFor="let currencySource of data | keyvalue"
-                                    value="{{currencySource.key}}" 
-                                    (click)="selectCurrencySource($event)">
-                                {{currencySource.key}}
-                                <img src="{{currencySource.value}}" class="flag">
-                            </button>
-                        </div>
-                    </div>
-                    <div class="input-footer left">1 {{currencySource}} = {{ baseToTarget }} {{currencyTarget}}</div>
-                </label>
-            </div>
-
-            <div>
-                <button>
-                    <span>
-                        <img src="../../../assets/images/icons/exchange (1).png">
-                    </span>
-                </button>
-            </div>
-
-            <div class="col">
-                <label>
-                    <div class="input-header left">
-                        Currency I want
-                    </div>
-                    <div>
-                        <div class="d-inline-block input-content">
-                            <input name="amountOutput" 
-                                    #amountOutput="ngModel" 
-                                    ngModel value="{{currencyTargetAmount}}" 
-                                    placeholder="{{currencyTargetAmount}}"
-                                    readonly>
+<div *ngIf="data; else loader">
+    <section>
+        <div class="converter">
+            <div class="row align-items-center">
+                <div class="col">
+                    <label>
+                        <div class="input-header left">Currency I have</div>
+                        <div class="input-content">
+                            <input type="text" name="amount" #amount="ngModel" ngModel
+                                placeholder="{{currencySourceAmount}}" (keyup)="keyupCurrencyAmount(amount.value)"
+                                class="d-inline-block">
                         </div>
                         <div ngbDropdown class="d-inline-block">
                             <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
-                                {{currencyTarget }}
-                                <span><img src="{{currencyTargetSrc}}" class="flag"></span>
+                                {{currencySource}}
+                                <span><img src="{{currencySourceSrc}}" class="flag"></span>
                             </button>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
-                                <button ngbDropdownItem *ngFor="let currencyTarget of data | keyvalue"
-                                        value="{{currencyTarget.key}}" 
-                                        (click)="selectCurrencyTarget($event)">
-                                        {{currencyTarget.key}}
-                                    <img src="{{currencyTarget.value}}" class="flag" 
-                                            (click)="selectCurrencyTarget($event)">
+                                <button ngbDropdownItem *ngFor="let currencySource of data | keyvalue"
+                                    value="{{currencySource.key}}" (click)="selectCurrencySource($event)">
+                                    {{currencySource.key}}
+                                    <img src="{{currencySource.value}}" class="flag">
                                 </button>
                             </div>
                         </div>
-                    </div>
+                        <div class="input-footer left">1 {{currencySource}} = {{ baseToTarget }} {{currencyTarget}}
+                        </div>
+                    </label>
+                </div>
 
-                    <div class="input-footer left">
-                        1 {{currencyTarget}} = {{targetToBase}} {{currencySource}}
-                    </div>
-                </label>
+                <div>
+                    <button>
+                        <span>
+                            <img src="../../../assets/images/icons/exchange (1).png">
+                        </span>
+                    </button>
+                </div>
+
+                <div class="col">
+                    <label>
+                        <div class="input-header left">
+                            Currency I want
+                        </div>
+                        <div>
+                            <div class="d-inline-block input-content">
+                                <input type="text" name="amountOutput" #amountOutput="ngModel" ngModel
+                                    value="{{currencyTargetAmount}}" placeholder="{{currencyTargetAmount}}" readonly>
+                            </div>
+                            <div ngbDropdown class="d-inline-block">
+                                <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
+                                    {{currencyTarget }}
+                                    <span><img src="{{currencyTargetSrc}}" class="flag"></span>
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
+                                    <button ngbDropdownItem *ngFor="let currencyTarget of data | keyvalue"
+                                        value="{{currencyTarget.key}}" (click)="selectCurrencyTarget($event)">
+                                        {{currencyTarget.key}}
+                                        <img src="{{currencyTarget.value}}" class="flag"
+                                            (click)="selectCurrencyTarget($event)">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-footer left">
+                            1 {{currencyTarget}} = {{targetToBase}} {{currencySource}}
+                        </div>
+                    </label>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="period-menu">
-        <div class="btn-group btn-group-toggle m-2">
-            <div *ngFor="let period of periods; let i = index" 
-                    [class.active]="currentIndex === i" 
-                    class='btn btn-light'
-                    (click)="handleClick(i)">
-                {{period}}
+        <div class="period-menu">
+            <div class="btn-group btn-group-toggle m-2">
+                <div *ngFor="let period of periods; let i = index" [class.active]="currentIndex === i"
+                    class='btn btn-light' (click)="handleClick(i)">
+                    {{period}}
+                </div>
             </div>
         </div>
-    </div>
-</section>
-
-<app-rate-dynamics [period]='period' [base]='currencySource' [currency]='currencyTarget'></app-rate-dynamics>
+    </section>
+    <app-rate-dynamics [period]='period' [base]='currencySource' [currency]='currencyTarget'></app-rate-dynamics>
+</div>
+<ng-template #loader>
+    <div className="loader">Łoading data...</div>
+</ng-template>

@@ -64,13 +64,13 @@ export class ApiService {
   getLatestRates(base, currency): Observable<any> {
     this.checkCacheHealth();
     let requestString = 'https://api.exchangeratesapi.io/latest?base=' + base + '&symbols='+ currency;
-    console.log("requestString=", requestString);
+    console.debug("requestString=", requestString);
     let cacheKey = this.getHashOfString(requestString);
     if (this.cache[cacheKey]) {
-      console.info("Get the latest rates from cache [" + base +"/" + currency + "] for pair");
+      console.debug("Get the latest rates from cache [" + base +"/" + currency + "] for pair");
       return this.cache[cacheKey];  
     }
-    console.info("Get the latest rates for pair [" + base +"/" + currency + "] from source");
+    console.debug("Get the latest rates for pair [" + base +"/" + currency + "] from source");
     this.cache[cacheKey] = this.http.get(requestString)
       .pipe(
         shareReplay(1),
@@ -89,7 +89,7 @@ export class ApiService {
                           + '&start_at='+ start_at 
                           + '&end_at=' + end_at 
                           + '&symbols=' + symbols;
-    console.log("requestString=", requestString);                      
+    console.debug("requestString=", requestString);                      
     // TODO: Redesign as default parameter
     if (periodType === undefined) { 
       periodType = Periods.SEVEN_DAYS;
@@ -97,10 +97,10 @@ export class ApiService {
     if(periodType === Periods.SEVEN_DAYS || periodType == Periods.ONE_MONTH) {
       let cacheKey = this.getHashOfString(requestString);
       if (this.cache[cacheKey]) {
-        console.info("Get rates for '" + periodType + "'[" + start_at + " ~ " + end_at + "] from cache");
+        console.debug("Get rates for '" + periodType + "'[" + start_at + " ~ " + end_at + "] from cache");
         return this.cache[cacheKey];  
       }
-      console.info("Get rates for '" + periodType + "' [" + start_at + " ~ " + end_at + "] from source and add to cache")
+      console.debug("Get rates for '" + periodType + "' [" + start_at + " ~ " + end_at + "] from source and add to cache")
       this.cache[cacheKey] = this.http.get(requestString)
       .pipe(
         shareReplay(1),
@@ -112,7 +112,7 @@ export class ApiService {
       )
       return this.cache[cacheKey];
     }
-    console.info("Get rates for '" + periodType + 
+    console.debug("Get rates for '" + periodType + 
         "' [" + start_at + " ~" + end_at + "] from source without interaction with cache");
     return this.http.get('https://api.exchangeratesapi.io/history?base=' + base + '&start_at='+ 
            start_at +'&end_at=' + end_at + '&symbols=' + symbols).pipe(catchError(this.handleError));
@@ -121,13 +121,13 @@ export class ApiService {
   getCrossRates(countries, base): Observable<any> {
     this.checkCacheHealth();
     let requestString = 'https://api.exchangeratesapi.io/latest?base='+ base+ '&symbols=' + countries;
-    console.log("requestString=", requestString);
+    console.debug("requestString=", requestString);
     let cacheKey = this.getHashOfString(requestString);
     if (this.cache[cacheKey]) {
-      console.info("Get the cross rates from cache");
+      console.debug("Get the cross rates from cache");
       return of(this.cache[cacheKey]);
     }
-    console.info("Get the cross rates from 'exchangeratesapi.io'");
+    console.debug("Get the cross rates from 'exchangeratesapi.io'");
     this.cache[cacheKey] = this.http.get(requestString)
       .pipe(
         shareReplay(1),
@@ -149,7 +149,7 @@ export class ApiService {
       hash  = ((hash << 5) - hash) + chr;
       hash |= 0;
     }
-    console.log("hash = ", hash);
+    console.debug("hash = ", hash);
     return hash;
   }
 
@@ -162,15 +162,15 @@ export class ApiService {
     let cacheKeys = Object.keys(this.cache)
     const cacheSize = cacheKeys.length;
     if (cacheSize > this.cacheMaxSize) {
-      console.log("Truncate is required, cache size [" + cacheSize + "]")
+      console.debug("Truncate is required, cache size [" + cacheSize + "]")
       // remove third part of cache
       for (let index = 0; index < 900; index++) {
         const key = cacheKeys[index];
         delete this.cache[key];
       }
-      console.log("Cache size after truncate:", Object.keys(this.cache).length);
+      console.debug("Cache size after truncate:", Object.keys(this.cache).length);
     } else {
-      console.log("Truncate is not required, cache size [" + cacheSize + "]");
+      console.debug("Truncate is not required, cache size [" + cacheSize + "]");
     }
   }
 
@@ -181,14 +181,14 @@ export class ApiService {
       this.lastCacheCleanDate.getFullYear() == today.getFullYear();
     let cacheKeys = Object.keys(this.cache)
     if (!isToday) {
-      console.log("A new day has come, cache cleanup is required")
+      console.debug("A new day has come, cache cleanup is required")
       for (let index = 0; index < cacheKeys.length; index++) {
         const key = cacheKeys[index];
         delete this.cache[key];
       }
-      console.log("Cache size after cleanup [" + Object.keys(this.cache).length + "]")
+      console.debug("Cache size after cleanup [" + Object.keys(this.cache).length + "]")
     } else {
-      console.log("Waiting for new day, cache cleanup is not required")
+      console.debug("Waiting for new day, cache cleanup is not required")
     }
   }
 

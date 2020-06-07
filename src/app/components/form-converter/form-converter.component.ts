@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { DynamicRate } from 'src/app/interfaces/dynamic-rate.interface';
 
@@ -10,7 +10,15 @@ import { DynamicRate } from 'src/app/interfaces/dynamic-rate.interface';
 
 export class FormConverterComponent implements OnInit {
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) { 
+    this.currencyNames = this.apiService.getCurrencyNames();
+    this.periods = this.apiService.getPeriodNames();
+    this.currencySource = this.apiService.getDefaultSourceCurrency();
+    this.currencySourceSrc = this.apiService.getFlagImgSrc(this.currencySource);
+    this.currencyTarget = this.apiService.getDefaultTargetCurrency();
+    this.currencyTargetSrc = this.apiService.getFlagImgSrc(this.currencyTarget);
+    this.period = this.periods[this.currentIndex];
+  }
 
   // Template binding
   data = null;
@@ -29,14 +37,6 @@ export class FormConverterComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.currencyNames = this.apiService.getCurrencyNames();
-    this.periods = this.apiService.getPeriodNames();
-    this.currencySource = this.apiService.getDefaultSourceCurrency();
-    this.currencySourceSrc = this.apiService.getFlagImgSrc(this.currencySource);
-    this.currencyTarget = this.apiService.getDefaultTargetCurrency();
-    this.currencyTargetSrc = this.apiService.getFlagImgSrc(this.currencyTarget);
-
-    this.period = this.periods[this.currentIndex];
     this.data = new Map();
     for (let index = 0; index < this.currencyNames.length; index++) {
       const currency = this.currencyNames[index];
@@ -48,7 +48,7 @@ export class FormConverterComponent implements OnInit {
 
   keyupCurrencyAmount(value) {
     this.currencySourceAmount = value;
-    this.currencyTargetAmount = this.currencySourceAmount * this.baseToTarget;
+    this.currencyTargetAmount = (this.currencySourceAmount * this.baseToTarget);
   }
 
   handleClick(index) {
@@ -83,13 +83,13 @@ export class FormConverterComponent implements OnInit {
     this.apiService.getLatestRates(base,currency).subscribe((result: DynamicRate) => {
       let rates;
       rates = result.rates;
-      this.baseToTarget = rates[currency].toFixed(3);
-      this.currencyTargetAmount = (this.currencySourceAmount * this.baseToTarget).toFixed(3);
+      this.baseToTarget = rates[currency].toFixed(2);
+      this.currencyTargetAmount = (this.currencySourceAmount * this.baseToTarget).toFixed(2);
     });
     this.apiService.getLatestRates(currency,base).subscribe((result: DynamicRate) => {
       let rates;
       rates = result.rates;
-      this.targetToBase = rates[base].toFixed(3);
+      this.targetToBase = rates[base].toFixed(2);
     });
 
   }

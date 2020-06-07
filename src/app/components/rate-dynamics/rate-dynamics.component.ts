@@ -3,7 +3,6 @@ import { DynamicRate } from '../../interfaces/dynamic-rate.interface';
 import { FormConverterComponent } from '../form-converter/form-converter.component'
 import { CalcService } from 'src/app/services/calc.service';
 import { ApiService } from '../../services/api.service';
-import { Periods } from 'src/app/services/periods.enum';
 
 @Component({
   selector: 'app-rate-dynamics',
@@ -31,45 +30,53 @@ export class RateDynamicsComponent implements OnChanges {
   
 
   constructor(private apiService: ApiService, private calcService: CalcService) {
-    console.log("Period is ", this.period);
-    this.from = this.calcService.calculateFrom(this.period);
-    this.to = this.calcService.calculateTo();
-    this.updateRates();
+    console.info("rd.constructor");
   }
 
   updateRates() {
-    console.log("rates:", this.base, this.currency, this.period);
+    console.info("rd.updateRates");
     this.apiService
       .getRatesFromPeriod(this.base, this.currency, this.from, this.to, this.period)
       .subscribe((result: DynamicRate) => {
         this.dataForChart = this.getSortedRates(result.rates);
         let ratesMap = this.dataForChart;
         this.data = this.simplifyRatesMap(ratesMap);
+        this.updateSlicedData();
         this.collectionSize = this.data.length;
       });
   }
 
   setPageSize(value) {
+    console.info("rd.setPageSize=", value);
     this.pageSize = parseInt(value);
     this.updateSlicedData();
   }
 
-  get items() {
-    this.updateSlicedData();
-    return this.slicedData;
-  }
+  // get items() {
+  //   console.debug("get items");
+  //   this.updateSlicedData();
+  //   console.debug("this.slicedData", this.slicedData);
+  //   return this.slicedData;
+  // }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.info("ngOnChanges.changes", changes);
     for (let propName in changes) {
       if (propName === 'period') {
         this.from = this.calcService.calculateFrom(this.period);
         this.to = this.calcService.calculateTo();
-        this.updateRates();
       }
+      // if (propName === 'base' || propName === 'currency') {
+      //   this.updateRates();
+      //   this.updateSlicedData();
+      //   console.debug("propName === base");
+      // } 
     }
+    this.updateRates();
   }
 
   private updateSlicedData() {
+    console.info("rd.updateSlicedData");
     this.slicedData = this.data
       .map((item, i) => ({ id: i + 1, ...item }))
       .slice((this.page - 1) * this.pageSize, 
