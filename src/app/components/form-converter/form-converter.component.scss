@@ -9,20 +9,29 @@
 
 body {
   font-size: 18px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
 }
 
 .converter {
   padding-top: 20px;
+  padding-bottom: 20px;
   background-color: #f1f1f1;
   width: 100%;
   margin: 0;
   margin-top: 20px;
+  width: 500px;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
 }
-
 
 .input-header {
   display: block;
   font-size: 18px;
+  font-weight: 600;
+  padding-left: 10px;
 }
 
 .input-footer {
@@ -31,13 +40,11 @@ body {
   font-size: 14px;
   position: relative;
   bottom: 0;
+  padding-left: 10px;
 }
 
 .input-content {
-  display: inline-block;
-  padding-right: 10px;
-  padding-left: 10px;
-  // border-bottom: 1px solid black;
+  width: 100%;
 }
 
 input {
@@ -45,39 +52,46 @@ input {
   border: none;
   font-size: 26px;
   font-weight: 800;
-  padding: 6px;
+  padding: 10px;
+  margin-left: 2px;
   outline: none;
-  background-color:red;
-  border: 1px solid black;
-  height: 60px;
+  background-color: #f1f1f1;
+  border: 1px solid gainsboro;
+  border-radius: 5px 0 0 5px;
+  height: 62px;
+  // width: 300px;
+  vertical-align: middle;
   &:hover {
-    border: none;
     outline: none;
   }
   &:focus {
-    border: none;
     outline: none;
   }
   &::placeholder {
-    color:black;
+    color: gray;
     opacity: 1;
   }
 }
 
-
 .dropdown-menu {
-  max-height: 300px !important;
-  overflow-y: scroll !important;
+  max-height: 300px;
+  overflow-y: scroll;
   background-color: green($color: #000000);
 }
 
 .dropdown {
-  border: 1px solid black;
-  margin-top: 0px;
+  display: inline-block;
+  width: 80px;
+  border: 1px solid gainsboro;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
 }
 
 .drop {
-  background-color:#f1f1f1;
+  background-color: #f1f1f1;
+  &:hover {
+    background-color: #f1f1f1;
+  }
 }
 
 select {
@@ -97,7 +111,15 @@ select {
 
 .flag {
   display: inline-block;
-  height: 24px; 
+  height: 24px;
+  width: 24px;
+  margin-left: 8px;
+  float: right;
+}
+
+.flag-main {
+  display: inline-block;
+  height: 24px;
   width: 24px;
   margin-left: 8px;
 }
@@ -119,14 +141,18 @@ button {
   float: right;
 }
 
-// .column {
-//   display: flex;
-//   flex-direction: column;
-//   border: 1px solid gainsboro;
-// }
-
 .thumb {
   cursor: pointer;
+}
+
+.column {
+  width: 100%;
+  padding-left: 20px;
+  @media only screen and (max-width: 600px) {
+    body {
+      background-color: lightblue;
+    }
+  }
 }
 
 // .active {
