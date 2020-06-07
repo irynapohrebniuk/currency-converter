@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, shareReplay  } from 'rxjs/operators';
+import { catchError, shareReplay } from 'rxjs/operators';
 import { throwError, Observable, of, EMPTY } from 'rxjs'
 import { Periods } from './periods.enum';
 
@@ -20,10 +20,10 @@ export class ApiService {
 
   private readonly periodNames = Object.values(Periods);
 
-  private cache:any = {};
+  private cache: any = {};
 
   /*
-  * Let assume there are 32 currency types. 
+  * Let's assume there are 32 currency types. 
   * Total number of cominations of possible pairs is 32 * 32 = 904 
   * Each combination will generate the following requests:
   * 1. current rates     ~  64 bytes per request
@@ -32,12 +32,12 @@ export class ApiService {
   * 
   * So total size of cache in Mb: (64 + 241 + 774) * 3 * 904 = 2926248 bytes = 3Mb  
   */
-  private cacheMaxSize:number = 904 * 3;
+  private cacheMaxSize: number = 904 * 3;
 
   private lastCacheCleanDate: Date = new Date();
 
-  
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) { }
 
   getFlagImgSrc(currencyName: string) {
     if (currencyName != undefined) {
@@ -63,14 +63,14 @@ export class ApiService {
 
   getLatestRates(base, currency): Observable<any> {
     this.checkCacheHealth();
-    let requestString = 'https://api.exchangeratesapi.io/latest?base=' + base + '&symbols='+ currency;
-    console.debug("requestString=", requestString);
+    let requestString = 'https://api.exchangeratesapi.io/latest?base=' + base + '&symbols=' + currency;
+    console.debug("[Request to API]:", requestString);
     let cacheKey = this.getHashOfString(requestString);
     if (this.cache[cacheKey]) {
-      console.debug("Get the latest rates from cache [" + base +"/" + currency + "] for pair");
-      return this.cache[cacheKey];  
+      console.debug("Get the latest rates from cache [" + base + "/" + currency + "] for pair");
+      return this.cache[cacheKey];
     }
-    console.debug("Get the latest rates for pair [" + base +"/" + currency + "] from source");
+    console.debug("Get the latest rates for pair [" + base + "/" + currency + "] from source");
     this.cache[cacheKey] = this.http.get(requestString)
       .pipe(
         shareReplay(1),
@@ -80,54 +80,51 @@ export class ApiService {
           return EMPTY;
         })
       );
-    return this.cache[cacheKey];  
+    return this.cache[cacheKey];
   }
 
-  getRatesFromPeriod(base, symbols, start_at, end_at, periodType): Observable<any>{
+  getRatesFromPeriod(base, symbols, start_at, end_at, periodType = Periods.SEVEN_DAYS): Observable<any> {
     this.checkCacheHealth();
-    let requestString = 'https://api.exchangeratesapi.io/history?base=' + base 
-                          + '&start_at='+ start_at 
-                          + '&end_at=' + end_at 
-                          + '&symbols=' + symbols;
-    console.debug("requestString=", requestString);                      
+    let requestString = 'https://api.exchangeratesapi.io/history?base=' + base
+      + '&start_at=' + start_at
+      + '&end_at=' + end_at
+      + '&symbols=' + symbols;
+    console.debug("[Request to API]:", requestString);
     // TODO: Redesign as default parameter
-    if (periodType === undefined) { 
-      periodType = Periods.SEVEN_DAYS;
-    }
-    if(periodType === Periods.SEVEN_DAYS || periodType == Periods.ONE_MONTH) {
+    if (periodType === Periods.SEVEN_DAYS || periodType == Periods.ONE_MONTH) {
       let cacheKey = this.getHashOfString(requestString);
       if (this.cache[cacheKey]) {
         console.debug("Get rates for '" + periodType + "'[" + start_at + " ~ " + end_at + "] from cache");
-        return this.cache[cacheKey];  
+        return this.cache[cacheKey];
       }
       console.debug("Get rates for '" + periodType + "' [" + start_at + " ~ " + end_at + "] from source and add to cache")
       this.cache[cacheKey] = this.http.get(requestString)
-      .pipe(
-        shareReplay(1),
-        catchError(error => {
-          delete this.cache[cacheKey];
-          console.error("There is no response from server, add empty value to cache. Reason: [ " + error + "]")
-          return EMPTY;
-        })
-      )
+        .pipe(
+          shareReplay(1),
+          catchError(error => {
+            delete this.cache[cacheKey];
+            console.error("There is no response from server, add empty value to cache. Reason: [ " + error + "]")
+            return EMPTY;
+          })
+        )
       return this.cache[cacheKey];
     }
-    console.debug("Get rates for '" + periodType + 
-        "' [" + start_at + " ~" + end_at + "] from source without interaction with cache");
-    return this.http.get('https://api.exchangeratesapi.io/history?base=' + base + '&start_at='+ 
-           start_at +'&end_at=' + end_at + '&symbols=' + symbols).pipe(catchError(this.handleError));
+    console.debug("Get rates for '" + periodType +
+      "' [" + start_at + " ~" + end_at + "] from source without interaction with cache");
+    return this.http.get('https://api.exchangeratesapi.io/history?base=' + base + '&start_at=' +
+      start_at + '&end_at=' + end_at + '&symbols=' + symbols).pipe(catchError(this.handleError));
   }
 
   getCrossRates(countries, base): Observable<any> {
     this.checkCacheHealth();
-    let requestString = 'https://api.exchangeratesapi.io/latest?base='+ base+ '&symbols=' + countries;
-    console.debug("requestString=", requestString);
+    let requestString = 'https://api.exchangeratesapi.io/latest?base=' + base + '&symbols=' + countries;
+    console.debug("[Request to API]:", requestString);
     let cacheKey = this.getHashOfString(requestString);
     if (this.cache[cacheKey]) {
-      console.debug("Get the cross rates from cache");
-      return of(this.cache[cacheKey]);
+      console.debug("Get the cross rates for [" + countries + "] from cache");
+      return this.cache[cacheKey];
     }
-    console.debug("Get the cross rates from 'exchangeratesapi.io'");
+    console.debug("Get the cross rates for [" + countries + "] from source");
     this.cache[cacheKey] = this.http.get(requestString)
       .pipe(
         shareReplay(1),
@@ -137,64 +134,65 @@ export class ApiService {
           return EMPTY;
         })
       )
+    return this.cache[cacheKey];
   }
 
   // Calculate unique value for unique string using bitwise operator (left shift)
   // Source: https://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
-  private getHashOfString(inputString: string) {
+  private getHashOfString(inputString: string): number {
     let hash = 0;
     let chr;
     for (let i = 0; i < inputString.length; i++) {
-      chr   = inputString.charCodeAt(i);
-      hash  = ((hash << 5) - hash) + chr;
+      chr = inputString.charCodeAt(i);
+      hash = ((hash << 5) - hash) + chr;
       hash |= 0;
     }
-    console.debug("hash = ", hash);
     return hash;
   }
 
   private checkCacheHealth() {
     this.truncateCache();
-    this.cleanupCache();
+    this.invalidateCache();
   }
 
   private truncateCache(): void {
     let cacheKeys = Object.keys(this.cache)
     const cacheSize = cacheKeys.length;
     if (cacheSize > this.cacheMaxSize) {
-      console.debug("Truncate is required, cache size [" + cacheSize + "]")
+      console.debug("Cache truncating is required, size is [" + cacheSize +
+        "], allowable size is [" + this.cacheMaxSize + "]");
       // remove third part of cache
       for (let index = 0; index < 900; index++) {
         const key = cacheKeys[index];
         delete this.cache[key];
       }
-      console.debug("Cache size after truncate:", Object.keys(this.cache).length);
+      console.debug("Cache size after truncate = [" + Object.keys(this.cache).length + "]");
     } else {
-      console.debug("Truncate is not required, cache size [" + cacheSize + "]");
+      console.debug("Truncate is not required, cache size is [" + cacheSize +
+        "], allowable size is [" + this.cacheMaxSize + "]");
     }
   }
 
-  private cleanupCache(): void {
+  private invalidateCache(): void {
     const today = new Date();
-    const isToday =  this.lastCacheCleanDate.getDate() == today.getDate() &&
+    const isToday = this.lastCacheCleanDate.getDate() == today.getDate() &&
       this.lastCacheCleanDate.getMonth() == today.getMonth() &&
       this.lastCacheCleanDate.getFullYear() == today.getFullYear();
     let cacheKeys = Object.keys(this.cache)
     if (!isToday) {
-      console.debug("A new day has come, cache cleanup is required")
+      console.debug("A new day has come, cache invalidating is required")
       for (let index = 0; index < cacheKeys.length; index++) {
         const key = cacheKeys[index];
         delete this.cache[key];
       }
-      console.debug("Cache size after cleanup [" + Object.keys(this.cache).length + "]")
+      console.debug("Cache size after cleanup is [" + Object.keys(this.cache).length + "]");
     } else {
-      console.debug("Waiting for new day, cache cleanup is not required")
+      console.debug("Cache invalidating is not required throughout the day");
     }
   }
 
   private handleError() {
     return throwError("there is no response from server api");
   }
-
 
 }

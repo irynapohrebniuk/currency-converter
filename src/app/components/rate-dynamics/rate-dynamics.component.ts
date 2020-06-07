@@ -3,6 +3,7 @@ import { DynamicRate } from '../../interfaces/dynamic-rate.interface';
 import { FormConverterComponent } from '../form-converter/form-converter.component'
 import { CalcService } from 'src/app/services/calc.service';
 import { ApiService } from '../../services/api.service';
+import { Periods } from 'src/app/services/periods.enum';
 
 @Component({
   selector: 'app-rate-dynamics',
@@ -14,7 +15,7 @@ export class RateDynamicsComponent implements OnChanges {
   private to;
   private data;
 
-  @Input() period: FormConverterComponent;
+  @Input() period: Periods;
   @Input() base: string;
   @Input() currency: string;
 
