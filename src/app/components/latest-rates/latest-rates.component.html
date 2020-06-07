@@ -1,8 +1,8 @@
 <section>
     <div *ngIf="latestRates; else loader">
-      <div class="title">Latest Rates for {{latestRates.base}}</div>
+      <div class="title">Latest Rates for '{{latestRates.rates.size}}'</div>
       <div class="table-content">
-        <table class="table table-striped">
+        <table class="table table-striped" *ngIf="!clicked">
           <thead>
             <tr>
               <th scope="col">Currency</th>
@@ -10,14 +10,17 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of latestRates.rates | keyvalue">
-              <th scope="row">{{ item.key }}</th>
+            <tr *ngFor="let el of firstFiveRates | keyvalue">
+              <th scope="row">{{ el.key }}</th>
               <td>
-                {{ item.value }}
+                {{ el.value }}
               </td>
             </tr>
           </tbody>
         </table>
+
+        <button (click)="setFlag()" class="btn btn-outline-secondary">More...</button>
+
       </div>
     </div>
   

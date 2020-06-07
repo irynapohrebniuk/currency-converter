@@ -2,12 +2,14 @@
     <section>
         <div class="converter">
             <div class="converter-row">
-                <div class="column">
+                <div class="converter-column">
+                    <!-- Input data -->
                     <div class="input-header left">From</div>
                     <div class="input-content">
-                        <input type="number" min="0" (keyup)="keyupCurrencyAmount($event.target.value)"
+                        <div>
+                            <input type="number" min="0" (keyup)="keyupCurrencyAmount($event.target.value)"
                             class="d-inline-block" [(value)]="currencySourceAmount" placeholder="0">
-
+                        </div>
                         <div ngbDropdown class="d-inline-block">
                             <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
                                 {{currencySource}}
@@ -22,25 +24,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="input-footer left">
+                    <div class="input-footer right">
                         1 {{currencySource}} = {{ baseToTarget }} {{currencyTarget}}
                     </div>
-                </div>
 
-                <div class="column-icon">
-                    <button class="icon-exchange vertical-center"></button>
-                    <!-- <button>
-                        <span>
-                            <img src="../../../assets/images/icons/exchange (1).png">
-                        </span>
-                    </button> -->
-                </div>
-
-                <div class="column">
+                    <!-- Input result  -->
                     <div class="input-header left">To</div>
                     <div class="input-content">
-                        <input type="text" name="amountOutput" #amountOutput="ngModel" ngModel
+                        <div>
+                            <input type="text" name="amountOutput" #amountOutput="ngModel" ngModel
                             value="{{currencyTargetAmount}}" placeholder="{{currencyTargetAmount}}" readonly>
+                        </div>
+                        
                         <div ngbDropdown class="d-inline-block">
                             <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
                                 {{currencyTarget }}
@@ -56,9 +51,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="input-footer left">
+                    <div class="input-footer right">
                         1 {{currencyTarget}} = {{targetToBase}} {{currencySource}}
                     </div>
+                </div>
+                
+                <div class="rates-column">
+                    <h5>Latest rates</h5>
                 </div>
             </div>
         </div>
@@ -71,8 +70,11 @@
             </div>
         </div>
     </section>
-    <app-rate-dynamics [period]='period' [base]='currencySource' [currency]='currencyTarget'></app-rate-dynamics>
 </div>
+<app-rate-dynamics [period]='period' [base]='currencySource' [currency]='currencyTarget'>
+</app-rate-dynamics>
+
+
 <ng-template #loader>
     <div className="loader">Loading data...</div>
 </ng-template>

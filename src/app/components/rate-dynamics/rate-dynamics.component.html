@@ -1,47 +1,51 @@
 <section>
-  <div *ngIf="slicedData; else loader">
-    <div class="title">Exchange Rate Dynamics for last {{period}}</div>
-    <div class="table-content">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Rate</th>
-            <th scope="col">
-              <span>100 {{currency}}</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of slicedData">
-            <th scope="row">{{ item[0] }}</th>
-            <td>
-              {{ item[1] | number: '1.2-2' }}
-            </td>
-            <td>
-              {{ item[1] * 100 | number: '1.2-2' }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="row">
+    <div class="column">
+      <div *ngIf="slicedData; else loader">
+        <div class="title">Exchange Rate Dynamics for last {{period}}</div>
+        <div class="table-content">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Rate</th>
+                <th scope="col">
+                  <span>100 {{currency}}</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of slicedData">
+                <th scope="row">{{ item[0] }}</th>
+                <td>
+                  {{ item[1] | number: '1.2-2' }}
+                </td>
+                <td>
+                  {{ item[1] * 100 | number: '1.2-2' }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" [maxSize]="maxSize"
+            (pageChange)="updateSlicedData()">
+          </ngb-pagination>
+
+          <select class="custom-select" style="width: auto" (change)="setPageSize($event.target.value)">
+            <option *ngFor="let item of pageItems" value="{{item}}">{{item}} items per page</option>
+          </select>
+
+        </div>
+      </div>
     </div>
-
-    <div class="d-flex justify-content-between p-2">
-      <ngb-pagination [collectionSize]="collectionSize" 
-                      [(page)]="page" 
-                      [pageSize]="pageSize" 
-                      [maxSize]="maxSize" (pageChange)="updateSlicedData()">
-      </ngb-pagination>
-
-      <select class="custom-select" style="width: auto" (change)="setPageSize($event.target.value)">
-        <option *ngFor="let item of pageItems" value="{{item}}">{{item}} items per page</option>
-      </select>
-
+    <div class="column">
+      <app-line-chart [dataForChart]="dataForChart" *ngIf="dataForChart"></app-line-chart>
     </div>
   </div>
-
+</section>
   <ng-template #loader>
     <div className="loader">Łoading data...</div>
   </ng-template>
-  <app-line-chart [dataForChart]="dataForChart" *ngIf="dataForChart"></app-line-chart>
-</section>
+
