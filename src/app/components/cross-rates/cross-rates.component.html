@@ -2,8 +2,47 @@
     <div class="grid-content">
         <!-- The first column - dropdown -->
         <div>
-
+            <div class="selector">
+                <div class="title">Select the base currency:</div>
+                <div>
+                    <div ngbDropdown class="d-inline-block" *ngIf="currencies">
+                        <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
+                            {{currencyBase }}
+                            <span><img src="{{currencyBaseSrc}}" class="flag-main"></span>
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
+                            <button ngbDropdownItem *ngFor="let currencyBase of currencies | keyvalue"
+                                value="{{currencyBase.key}}" (click)="selectCurrencyBase($event)">
+                                <img src="{{currencyBase.value}}" class="flag" (click)="selectCurrencyBase($event)">
+                                {{currencyBase.key}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="selector">
+                    <div class="title">Select the base currency:</div>
+                    <div>
+                        <div ngbDropdown class="d-inline-block" *ngIf="currencies">
+                            <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
+                                {{currencyBase }}
+                                <span><img src="{{currencyBaseSrc}}" class="flag-main"></span>
+                            </button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
+                                <button ngbDropdownItem *ngFor="let currencyBase of currencies | keyvalue"
+                                    value="{{currencyBase.key}}" (click)="selectCurrencyBase($event)">
+                                    <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                                    {{currencyBase.key}}
+                                    <img src="{{currencyBase.value}}" class="flag">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <!-- The second column - table -->
         <div>
             <table class="table table-striped">

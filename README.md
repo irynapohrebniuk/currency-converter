@@ -1,27 +1,27 @@
-# CurrencyConverter
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.5.
+![logo](src/assets/images/icons/logo.png) 
 
-## Development server
+# Currency Converter
+
+### Overview
+Currency Converter is a simple web application for currency conversion and exchange rates analysis.
+The application uses [exchangeratesapi.io](https://exchangeratesapi.io) service which provides data published by [European Central Bank](https://www.ecb.europa.eu/).
+
+### Features
+* Reverse currency conversion
+* Latest exchange rates for most popular currencies
+* Historical exchange rates for 7 days, 1 month, 1 and 5 years
+* Linear chart for historical data
+* Cross-rates table
+
+### Used technologies
+* [Anglular 9.1.6](https://angular.io/) 
+* [NG Bootstrap 6.1.0](https://ng-bootstrap.github.io)
+* [ng2-charts 2.3.2](https://github.com/valor-software/ng2-charts)
+* [Chart.js 2.9.3](https://www.chartjs.org/)
+
+
+
+## Try app in development mode
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

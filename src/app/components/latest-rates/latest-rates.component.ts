@@ -16,7 +16,7 @@ export class LatestRatesComponent implements OnInit {
   rates;
   clicked = false;
   buttonName = 'All rates';
-  currencySrc: string;
+  
   currencyBase;
   currencyBaseSrc: string;
 
@@ -82,6 +82,7 @@ export class LatestRatesComponent implements OnInit {
     }
     this.getLatestRates();
     this.clicked = false;
+    this.buttonName = 'All rates';
   }
 
 }
