@@ -13,8 +13,6 @@ body {
 }
 
 .converter {
-  padding: 20px;
-  background-color: #f1f1f1;
   width: 100%;
   margin-top: 20px;
   @media only screen and (max-width: 600px) {
@@ -23,8 +21,8 @@ body {
 }
 
 .converter-row {
-  display: block;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
   @media only screen and (max-width: 600px) {
     display: block;
     width: 100%;
@@ -32,22 +30,19 @@ body {
 }
 
 .converter-column {
-  display: inline-block;
-  width: 40%;
-  @media only screen and (max-width: 600px) {
-    display: inline-block;
-    width: 100%;
-  }
+  background-color: #f1f1f1;
+  border: 1px solid gainsboro;
+  border-radius: 10px;
+  padding: 15px 15px 0px 5px;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .rates-column {
-  display: inline-block;
-  background-color: whitesmoke;
-  width: 60%;
-  @media only screen and (max-width: 600px) {
-    display: inline-block;
-    width: 100%;
-  }
+  width: 90%;
+  margin: 0 auto;
+//  background-color: #f1f1f1;
+  border-radius: 10px;
 }
 
 .vertical-center {
@@ -59,25 +54,26 @@ body {
   transform: translate(-50%, -50%);
 }
 
-.input-header {
-  display: block;
-  font-size: 18px;
-  font-weight: 600;
-  padding-left: 30px;
-  margin-top: 20px;
-}
-
-.input-footer {
-  display: block;
-  margin-top: 3px;
-  font-size: 14px;
-  position: relative;
-}
-
-.input-content {
-  display: grid;
-  grid-template-columns: auto 120px;
-  width: 100%;
+.input {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  &-header {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    padding-left: 10px;
+  }
+  &-footer {
+    display: block;
+    margin-top: 3px;
+    font-size: 14px;
+    position: relative;
+  }
+    &-content {
+      display: grid;
+      grid-template-columns: auto 120px;
+      width: 100%;
+    }
 }
 
 input {
@@ -86,13 +82,13 @@ input {
   font-weight: 800;
   padding: 10px;
   outline: none;
-  background-color: #f1f1f1;
+//  background-color: #f1f1f1;
   border: 1px solid gainsboro;
   border-radius: 5px 0 0 5px;
   height: 62px;
   width: 100%;
   vertical-align: middle;
-  margin-left: 30px;
+  margin-left: 10px;
   &:hover {
     outline: none;
   }
@@ -118,16 +114,11 @@ input {
   display: inline-block;
   min-width: 120px;
   border: 1px solid gainsboro;
+  background-color: white;
   border-left: none;
   border-radius: 0 5px 5px 0;
 }
 
-.drop {
-  background-color: #f1f1f1;
-  &:hover {
-    background-color: #f1f1f1;
-  }
-}
 
 select {
   border: none;
@@ -137,6 +128,7 @@ select {
   &:hover {
     border: none;
     outline-style: none;
+    background-color: gainsboro;
   }
   &:focus {
     border: none;
@@ -162,8 +154,13 @@ button {
   display: inline-block;
   height: 60px;
   border: none;
-  background-color: #f1f1f1;
+  background-color:white;
   outline: none;
+}
+
+.border {
+  border: 2px solid black;
+  border-radius: 10px;
 }
 
 .select {

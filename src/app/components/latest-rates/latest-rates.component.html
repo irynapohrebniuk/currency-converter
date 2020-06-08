@@ -1,8 +1,32 @@
 <section>
-    <div *ngIf="latestRates; else loader">
-      <div class="title">Latest Rates for '{{latestRates.rates.size}}'</div>
-      <div class="table-content">
-        <table class="table table-striped" *ngIf="!clicked">
+  <div class='container-grid'>
+    <div class="selector">
+      <div class="title">Select the base currency:</div>
+      <div>
+        <div ngbDropdown class="d-inline-block" *ngIf="currencies">
+          <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
+            {{currencyBase }}
+            <span><img src="{{currencyBaseSrc}}" class="flag-main"></span>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
+            <button ngbDropdownItem *ngFor="let currencyBase of currencies | keyvalue" value="{{currencyBase.key}}"
+              (click)="selectCurrencyBase($event)">
+              <img src="{{currencyBase.value}}" class="flag" (click)="selectCurrencyBase($event)">
+              {{currencyBase.key}}
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div>
+      <div class="left">
+        <input type="button" (click)="onClick()" class="btn btn-outline-dark" [value]="buttonName">
+      </div>
+      <!-- Table with rates -->
+      <div *ngIf="firstFiveRates; else loader">
+        <div class="title">Currency Table: {{currencyBase}} </div>
+        <table class="table table-striped">
           <thead>
             <tr>
               <th scope="col">Currency</th>
@@ -10,21 +34,22 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let el of firstFiveRates | keyvalue">
-              <th scope="row">{{ el.key }}</th>
-              <td>
-                {{ el.value }}
+            <tr *ngFor="let item of rates | keyvalue">
+              <td class="col_1">
+                <img src={{getFlag(item.key)}} class="flag">
+                {{ item.key }}
+              </td>
+              <td class="col_2">
+                {{ item.value }}
               </td>
             </tr>
           </tbody>
         </table>
-
-        <button (click)="setFlag()" class="btn btn-outline-secondary">More...</button>
-
       </div>
     </div>
-  
-    <ng-template #loader>
-      <div className="loader">Loading data...</div>
-    </ng-template>
-  </section>
+  </div>
+
+  <ng-template #loader>
+    <div className="loader">Loading data...</div>
+  </ng-template>
+</section>

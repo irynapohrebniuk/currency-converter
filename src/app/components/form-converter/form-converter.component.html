@@ -3,61 +3,74 @@
         <div class="converter">
             <div class="converter-row">
                 <div class="converter-column">
-                    <!-- Input data -->
-                    <div class="input-header left">From</div>
-                    <div class="input-content">
-                        <div>
-                            <input type="number" min="0" (keyup)="keyupCurrencyAmount($event.target.value)"
-                            class="d-inline-block" [(value)]="currencySourceAmount" placeholder="0">
-                        </div>
-                        <div ngbDropdown class="d-inline-block">
-                            <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
-                                {{currencySource}}
-                                <span><img src="{{currencySourceSrc}}" class="flag-main"></span>
-                            </button>
-                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
-                                <button ngbDropdownItem *ngFor="let currencySource of data | keyvalue"
-                                    value="{{currencySource.key}}" (click)="selectCurrencySource($event)">
-                                    {{currencySource.key}}
-                                    <img src="{{currencySource.value}}" class="flag">
+                    <div class="input">
+                        <!-- Input data -->
+                        <div class="input-header left">FROM</div>
+                        <div class="input-content">
+                            <div>
+                                <input type="number" min="0" 
+                                        (keyup)="keyupCurrencyAmount($event.target.value)"
+                                        (change)="keyupCurrencyAmount($event.target.value)"
+                                        class="d-inline-block" 
+                                        [(value)]="currencySourceAmount" placeholder="0">
+                            </div>
+                            <div ngbDropdown class="d-inline-block">
+                                <button id="dropdownBasic1" ngbDropdownToggle>
+                                    {{currencySource}}
+                                    <span><img src="{{currencySourceSrc}}" class="flag-main"></span>
                                 </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
+                                    <button ngbDropdownItem *ngFor="let currencySource of data | keyvalue"
+                                        value="{{currencySource.key}}" (click)="selectCurrencySource($event)">
+                                        {{currencySource.key}}
+                                        <img src="{{currencySource.value}}" class="flag">
+                                    </button>
+                                </div>
                             </div>
                         </div>
+                        <div class="input-footer">
+                            1 {{currencySource}} = {{ baseToTarget }} {{currencyTarget}}
+                        </div>
                     </div>
-                    <div class="input-footer right">
-                        1 {{currencySource}} = {{ baseToTarget }} {{currencyTarget}}
+                    <div class="btn border">
+                        <img src="../../../assets/images/icons/exchange-v.png" 
+                                width="32" height="32" 
+                                (click)="reverseRates()"
+                                alt="Change base currency"
+                                ngbTooltip="Change base currency" placement="right">
                     </div>
+                    <div class="input">
+                        <!-- Input result  -->
+                        <div class="input-header left">TO</div>
+                        <div class="input-content">
+                            <div>
+                                <input type="text" name="amountOutput" #amountOutput="ngModel" ngModel
+                                    value="{{currencyTargetAmount}}" placeholder="{{currencyTargetAmount}}" readonly>
+                            </div>
 
-                    <!-- Input result  -->
-                    <div class="input-header left">To</div>
-                    <div class="input-content">
-                        <div>
-                            <input type="text" name="amountOutput" #amountOutput="ngModel" ngModel
-                            value="{{currencyTargetAmount}}" placeholder="{{currencyTargetAmount}}" readonly>
-                        </div>
-                        
-                        <div ngbDropdown class="d-inline-block">
-                            <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
-                                {{currencyTarget }}
-                                <span><img src="{{currencyTargetSrc}}" class="flag-main"></span>
-                            </button>
-                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
-                                <button ngbDropdownItem *ngFor="let currencyTarget of data | keyvalue"
-                                    value="{{currencyTarget.key}}" (click)="selectCurrencyTarget($event)">
-                                    {{currencyTarget.key}}
-                                    <img src="{{currencyTarget.value}}" class="flag"
-                                        (click)="selectCurrencyTarget($event)">
+                            <div ngbDropdown class="d-inline-block">
+                                <button id="dropdownBasic1" ngbDropdownToggle>
+                                    {{currencyTarget }}
+                                    <span><img src="{{currencyTargetSrc}}" class="flag-main"></span>
                                 </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                    <button ngbDropdownItem *ngFor="let currencyTarget of data | keyvalue"
+                                        value="{{currencyTarget.key}}" (click)="selectCurrencyTarget($event)">
+                                        {{currencyTarget.key}}
+                                        <img src="{{currencyTarget.value}}" class="flag"
+                                            (click)="selectCurrencyTarget($event)">
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="input-footer right">
-                        1 {{currencyTarget}} = {{targetToBase}} {{currencySource}}
+                        <div class="input-footer">
+                            1 {{currencyTarget}} = {{targetToBase}} {{currencySource}}
+                        </div>
                     </div>
                 </div>
-                
+
                 <div class="rates-column">
-                    <h5>Latest rates</h5>
+                    <app-popular-rates></app-popular-rates>
                 </div>
             </div>
         </div>
@@ -71,9 +84,8 @@
         </div>
     </section>
 </div>
-<app-rate-dynamics [period]='period' [base]='currencySource' [currency]='currencyTarget'>
+<app-rate-dynamics [period]="period" [base]="currencySource" [currency]="currencyTarget">
 </app-rate-dynamics>
-
 
 <ng-template #loader>
     <div className="loader">Loading data...</div>

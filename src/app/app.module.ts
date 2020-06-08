@@ -11,6 +11,7 @@ import { ApiService } from './services/api.service';
 import { ChartsModule } from 'ng2-charts';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { LatestRatesComponent } from './components/latest-rates/latest-rates.component';
+import { PopularRatesComponent } from './components/popular-rates/popular-rates.component';
 import { RateDynamicsComponent } from './components/rate-dynamics/rate-dynamics.component';
 import { CalcService } from './services/calc.service';
 import { FooterComponent } from './footer/footer.component';
@@ -23,6 +24,7 @@ import { FormsModule } from '@angular/forms';
     CrossRatesComponent,
     LineChartComponent,
     LatestRatesComponent,
+    PopularRatesComponent,
     RateDynamicsComponent,
     FooterComponent
   ],

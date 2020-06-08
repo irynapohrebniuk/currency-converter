@@ -65,6 +65,7 @@ export class ApiService {
     return this.getLatestRates(base, null);
   }
 
+
   getLatestRates(base, currencies): Observable<any> {
     this.checkCacheHealth();
     // Get rates for all currencies

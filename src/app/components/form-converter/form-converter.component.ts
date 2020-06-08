@@ -57,6 +57,18 @@ export class FormConverterComponent implements OnInit {
     this.period = this.periods[this.currentIndex];
   }
 
+  reverseRates() {
+    let temp;
+    let tempSrc;
+    temp = this.currencySource;
+    tempSrc = this.currencySourceSrc;
+    this.currencySource = this.currencyTarget;
+    this.currencySourceSrc = this.currencyTargetSrc;
+    this.currencyTarget = temp;
+    this.currencyTargetSrc = tempSrc;
+    this.currencySourceAmount = 1;
+  }
+
   selectCurrencySource(event) {
     if (event.target.value === undefined) {
       this.currencySource = event.target.parentNode.value;

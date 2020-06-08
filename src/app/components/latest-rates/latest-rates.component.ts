@@ -9,55 +9,79 @@ import { DynamicRate } from 'src/app/interfaces/dynamic-rate.interface';
 })
 export class LatestRatesComponent implements OnInit {
 
+  currencies = new Map<string, string>();
   latestRates;
   firstFiveRates;
+  restRates;
+  rates;
   clicked = false;
+  buttonName = 'All rates';
+  currencySrc: string;
+  currencyBase;
+  currencyBaseSrc: string;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    // TODO: Pass "base" from template
-    this.apiService.getAllLatestRates("USD").subscribe((result: DynamicRate) => {
-      this.formatRates(result.rates);
-      this.latestRates = result;
-      console.log(this.latestRates);
-      this.slicedData();
-    });
-
+    let currencyNames = this.apiService.getCurrencyNames();
+    for (let i = 0; i < currencyNames.length; i++) {
+      this.currencies.set(currencyNames[i], this.apiService.getFlagImgSrc(currencyNames[i]));
+    }
+    this.currencyBase = 'USD';
+    this.currencyBaseSrc = this.currencies.get(this.currencyBase);
+    this.getLatestRates();
   }
 
   private formatRates(rates): void {
-    Object.keys(rates).map(function(key, index) {
+    Object.keys(rates).map(function (key, index) {
       //TODO: It's too complex
       rates[key] = Number(Number.parseFloat(rates[key]).toFixed(2));
     });
   }
 
-  // TODO: finish 
   private slicedData() {
-    this.firstFiveRates = new Map<string,number>();
+    this.firstFiveRates = new Map<string, number>();
+    this.restRates = new Map<string, number>();
     let keys = Object.keys(this.latestRates.rates);
-    let number;
-    if (this.clicked) { 
-      number = keys.length 
-    } else {
-      number = 5;
-    }
-    console.log("number", number);
-    this.firstFiveRates = new Map<string,number>();
+    let number = (this.clicked) ? keys.length : 5;
+
     for (let i = 0; i < keys.length; i++) {
-      if (i > number) {
-        break;
+      if (i < number) {
+        this.firstFiveRates.set(keys[i], this.latestRates.rates[keys[i]]);
       }
-      this.firstFiveRates.set(keys[i], this.latestRates.rates[keys[i]]);
-      
+      this.restRates.set(keys[i], this.latestRates.rates[keys[i]]);
     }
-    console.log("firstFiveRates: ", this.firstFiveRates);
+    this.rates = this.firstFiveRates;
   }
 
-  setFlag(){
-    this.clicked = !this.clicked; 
-    this.slicedData();
+  onClick() {
+    this.clicked = !this.clicked;
+    this.rates = (this.clicked) ? this.restRates : this.firstFiveRates;
+    this.buttonName = (this.clicked) ? 'Less' : 'All rates';
+  }
+
+  getFlag(currencyName) {
+    return this.apiService.getFlagImgSrc(currencyName);
+  }
+
+  getLatestRates() {
+    this.apiService.getAllLatestRates(this.currencyBase).subscribe((result: DynamicRate) => {
+      this.formatRates(result.rates);
+      this.latestRates = result;
+      this.slicedData();
+    });
+  }
+
+  selectCurrencyBase(event) {
+    if (event.target.value === undefined) {
+      this.currencyBase = event.target.parentNode.value;
+      this.currencyBaseSrc = this.apiService.getFlagImgSrc(event.target.parentNode.value);
+    } else {
+      this.currencyBase = event.target.value;
+      this.currencyBaseSrc = this.apiService.getFlagImgSrc(event.target.value);
+    }
+    this.getLatestRates();
+    this.clicked = false;
   }
 
 }
