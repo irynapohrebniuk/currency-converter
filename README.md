@@ -13,6 +13,7 @@ The application uses [exchangeratesapi.io](https://exchangeratesapi.io) service 
 * Historical exchange rates for 7 days, 1 month, 1 and 5 years
 * Linear chart for historical data
 * Cross-rates table
+* Data caching for most frequent requests
 
 ### Used technologies
 * [Anglular 9.1.6](https://angular.io/) 
