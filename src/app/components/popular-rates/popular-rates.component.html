@@ -1,0 +1,28 @@
+
+      <!-- Table with popular rates -->
+      <div *ngIf="popularRates; else loader" class="container">
+        <div class="title">Popular exchange currency rates: base - {{currencyBase}} </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Currency</th>
+              <th scope="col">Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of popularRates | keyvalue">
+              <td class="col_1">
+                <img src={{getFlag(item.key)}} class="flag">
+                {{ item.key }}
+              </td>
+              <td class="col_2">
+                {{ item.value }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+  <ng-template #loader>
+    <div className="loader">Loading data...</div>
+  </ng-template>

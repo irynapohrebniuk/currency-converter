@@ -1,0 +1,42 @@
+.container {
+  display: block;
+  width: 95%;
+  margin: 0 auto;
+  @media only screen and (max-width: 600px) {
+    display: block;
+    width: 100%;
+  }
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  @media only screen and (max-width: 600px) {
+    font-size: 16px;
+  }
+}
+
+.left {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.grey {
+  background-color: gainsboro;
+}
+
+.col_1 {
+  width: 20%;
+  text-align: left;
+}
+.col_2 {
+  width: 40%;
+}
+
+.flag {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  float: left;
+  margin-right: 12px;
+}
