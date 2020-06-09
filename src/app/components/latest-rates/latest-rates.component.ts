@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service'
-import { DynamicRate } from 'src/app/interfaces/dynamic-rate.interface';
+import { Rates } from 'src/app/interfaces/rates.interface';
 
 @Component({
   selector: 'app-latest-rates',
@@ -65,7 +65,7 @@ export class LatestRatesComponent implements OnInit {
   }
 
   getLatestRates() {
-    this.apiService.getAllLatestRates(this.currencyBase).subscribe((result: DynamicRate) => {
+    this.apiService.getAllLatestRates(this.currencyBase).subscribe((result: Rates) => {
       this.formatRates(result.rates);
       this.latestRates = result;
       this.slicedData();

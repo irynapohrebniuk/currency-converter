@@ -1,0 +1,29 @@
+<div class="grid-container">
+    <div class="base-selector">
+        <div class="title">Select the base currency:</div>
+        <div>
+            <div ngbDropdown class="d-inline-block" *ngIf="currencies">
+                <button class="btn btn-outline-light text-dark" id="dropdownBasic1" ngbDropdownToggle>
+                    {{currencyBase }}
+                    <span><img src="{{currencyBaseSrc}}" class="flag-main"></span>
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop">
+                    <button ngbDropdownItem *ngFor="let currency of currencies | keyvalue" value="{{currency.key}}">
+                        <img src="{{currency.value}}" class="flag">
+                        {{currency.key}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="currency-container">
+        <div *ngFor="let currency of currencies | keyvalue">
+            <label>
+                <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                {{currency.key}}
+                <img src="{{currency.value}}" class="flag">
+            </label>
+        </div>
+    </div>
+</div>

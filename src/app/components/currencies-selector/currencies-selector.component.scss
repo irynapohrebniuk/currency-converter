@@ -1,0 +1,53 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 20% auto;
+  width: 100%;
+  @media only screen and (max-width: 600px) {
+    display: block;
+    width: 100%;
+  }
+}
+
+.base-selector {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.currency-container {
+  display: flex;  
+  flex-wrap: wrap;
+  width: 100%;
+  & div {
+    width: 80px;
+    margin: 10px;
+  }
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.dropdown {
+  background-color: gainsboro;
+  border-radius: 5px;
+}
+
+.dropdown-menu {
+  max-height: 300px;
+  overflow-y: scroll;
+  padding-left: 10px;
+}
+
+.flag {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+}
+
+.flag-main {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  margin-left: 8px;
+}

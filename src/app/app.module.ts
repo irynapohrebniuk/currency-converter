@@ -16,6 +16,7 @@ import { RateDynamicsComponent } from './components/rate-dynamics/rate-dynamics.
 import { CalcService } from './services/calc.service';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule } from '@angular/forms';
+import { CurrenciesSelectorComponent } from './components/currencies-selector/currencies-selector.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FormsModule } from '@angular/forms';
     LatestRatesComponent,
     PopularRatesComponent,
     RateDynamicsComponent,
-    FooterComponent
+    FooterComponent,
+    CurrenciesSelectorComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../services/api.service'
-import { RatesRef } from '../../interfaces/rate.interface'
+import { ApiService } from '../../services/api.service';
+import { Rates } from 'src/app/interfaces/rates.interface';
 
 @Component({
   selector: 'app-cross-rates',
@@ -15,7 +15,7 @@ export class CrossRatesComponent implements OnInit {
   currencyBase;
   currencyBaseSrc: string;
   
-  bases = ["USD","GBP","PLN","CZK","RON"];
+  bases = ["USD","GBP","PLN","CZK","RON","AUD","BGN", "DKK", "HRK", "ZAR"];
   header = ["#",...this.bases];
 
   countries = this.bases;
@@ -32,7 +32,7 @@ export class CrossRatesComponent implements OnInit {
     this.currencyBaseSrc = this.currencies.get(this.currencyBase);
 
     for (let base of this.bases) {
-        this.apiService.getCrossRates(this.countries_str, base).subscribe((result: RatesRef) => {
+        this.apiService.getCrossRates(this.countries_str, base).subscribe((result: Rates) => {
             let data = {"rates": result.rates}
             this.ratesRefs[base] = data;
         }); 

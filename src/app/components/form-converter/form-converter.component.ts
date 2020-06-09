@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { DynamicRate } from 'src/app/interfaces/dynamic-rate.interface';
+import { Rates } from 'src/app/interfaces/rates.interface';
 
 @Component({
   selector: 'app-form-converter',
@@ -93,13 +93,13 @@ export class FormConverterComponent implements OnInit {
 
 
   getLatestRates(base,currency) {
-    this.apiService.getLatestRates(base,currency).subscribe((result: DynamicRate) => {
+    this.apiService.getLatestRates(base,currency).subscribe((result: Rates) => {
       let rates;
       rates = result.rates;
       this.baseToTarget = rates[currency].toFixed(2);
       this.currencyTargetAmount = (this.currencySourceAmount * this.baseToTarget).toFixed(2);
     });
-    this.apiService.getLatestRates(currency,base).subscribe((result: DynamicRate) => {
+    this.apiService.getLatestRates(currency,base).subscribe((result: Rates) => {
       let rates;
       rates = result.rates;
       this.targetToBase = rates[base].toFixed(2);

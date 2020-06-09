@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service'
-import { DynamicRate } from 'src/app/interfaces/dynamic-rate.interface';
+import { Rates } from 'src/app/interfaces/rates.interface';
 
 @Component({
   selector: 'app-popular-rates',
@@ -41,7 +41,8 @@ export class PopularRatesComponent implements OnInit {
   }
 
   getLatestRates() {
-    this.apiService.getLatestRates(this.currencyBase, this.popularCurrencies).subscribe((result: DynamicRate) => {
+    this.apiService.getLatestRates(this.currencyBase, this.popularCurrencies)
+    .subscribe((result: Rates) => {
       let rates = result.rates;
       this.popularRates = this.formatRates(rates);
       console.log("this.formatRates(rates) =", this.formatRates(rates));

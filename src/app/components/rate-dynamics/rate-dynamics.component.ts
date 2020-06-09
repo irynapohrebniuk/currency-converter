@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { DynamicRate } from '../../interfaces/dynamic-rate.interface';
+import { Rates } from '../../interfaces/rates.interface';
 import { FormConverterComponent } from '../form-converter/form-converter.component'
 import { CalcService } from 'src/app/services/calc.service';
 import { ApiService } from '../../services/api.service';
@@ -35,7 +35,7 @@ export class RateDynamicsComponent implements OnChanges {
 
   updateRates() {
     this.apiService.getRatesFromPeriod(this.base, this.currency, this.from, this.to, this.period)
-      .subscribe((result: DynamicRate) => {
+      .subscribe((result: Rates) => {
         this.dataForChart = this.getSortedRates(result.rates);
         let ratesMap = this.dataForChart;
         this.data = this.simplifyRatesMap(ratesMap);
