@@ -10,10 +10,11 @@ import { Periods } from './periods.enum';
 
 export class ApiService {
   private readonly currencyNames = [
-    "PLN", "EUR", "CAD", "HKD", "ISK", "PHP", "DKK", "HUF", "CZK",
+    "EUR","USD",  "CAD", "GBP", "JPY", "CNY", "PLN", "HKD", 
+    "ISK", "PHP", "DKK", "HUF", "CZK",
     "AUD", "RON", "SEK", "IDR", "INR", "BRL", "RUB", "HRK",
-    "JPY", "THB", "CHF", "SGD", "BGN", "TRY", "CNY", "NOK",
-    "NZD", "ZAR", "USD", "MXN", "ILS", "GBP", "KRW", "MYR"
+    "THB", "CHF", "SGD", "BGN", "TRY", "NOK",
+    "NZD", "ZAR", "MXN", "ILS", "KRW", "MYR"
   ];
 
   private readonly flagImagesFolder = "../../../assets/images/country_flags/";
@@ -61,7 +62,7 @@ export class ApiService {
     return this.currencyNames[0];
   }
 
-  getAllLatestRates(base):Observable<any> {
+  getAllLatestRates(base): Observable<any> {
     return this.getLatestRates(base, null);
   }
 
@@ -71,7 +72,7 @@ export class ApiService {
     // Get rates for all currencies
     let requestString: string;
     if (currencies == null) {
-      requestString = 'https://api.exchangeratesapi.io/latest?base=' + base;  
+      requestString = 'https://api.exchangeratesapi.io/latest?base=' + base;
     } else {
       requestString = 'https://api.exchangeratesapi.io/latest?base=' + base + '&symbols=' + currencies;
     }
@@ -79,11 +80,11 @@ export class ApiService {
     let cacheKey = this.getHashOfString(requestString);
     if (this.cache[cacheKey]) {
       console.debug("[CACHE] Get the latest rates [base:" + base + "]" +
-                      (currencies == null ? "" :", currencies:" + currencies));
+        (currencies == null ? "" : ", currencies:" + currencies));
       return this.cache[cacheKey];
     }
     console.debug("[SOURCE] Get the latest rates [base:" + base + "]" +
-                      (currencies == null ? "" :", currencies:" + currencies));
+      (currencies == null ? "" : ", currencies:" + currencies));
     this.cache[cacheKey] = this.http.get(requestString)
       .pipe(
         shareReplay(1),

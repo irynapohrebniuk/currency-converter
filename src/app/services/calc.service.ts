@@ -7,6 +7,14 @@ import { Periods } from './periods.enum';
 
 export class CalcService {
 
+    toMoneyFormat(value) {
+        return Number.parseFloat(value).toFixed(2);
+    }
+
+    toFinancialFormat(value) {
+        return Number.parseFloat(value).toFixed(4);
+    }
+
     calculateTo() {
         let today = new Date();
         const day = today.getDate();

@@ -31,13 +31,13 @@ export class RateDynamicsComponent implements OnChanges {
   slicedData;
 
   constructor(private apiService: ApiService,
-    private calcService: CalcService) { }
+    public calc: CalcService) { }
 
   updateRates() {
     this.apiService.getRatesFromPeriod(this.base, this.currency, this.from, this.to, this.period)
       .subscribe((result: Rates) => {
-        this.dataForChart = this.getSortedRates(result.rates);
-        let ratesMap = this.dataForChart;
+        this.dataForChart = this.getSortedRates(result.rates, false);
+        let ratesMap = this.getSortedRates(result.rates, true);
         this.data = this.simplifyRatesMap(ratesMap);
         this.updateSlicedData();
         this.collectionSize = this.data.length;
@@ -59,8 +59,8 @@ export class RateDynamicsComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     for (let propName in changes) {
       if (propName === 'period') {
-        this.from = this.calcService.calculateFrom(this.period);
-        this.to = this.calcService.calculateTo();
+        this.from = this.calc.calculateFrom(this.period);
+        this.to = this.calc.calculateTo();
       }
     }
     this.updateRates();
@@ -76,9 +76,12 @@ export class RateDynamicsComponent implements OnChanges {
     return [...resultMap.entries()];
   }
 
-  private getSortedRates(rawRates: any) {
+  private getSortedRates(rawRates: any, reverse: boolean) {
     let rawRatesAsMap = new Map(Object.entries(rawRates));
-    return new Map([...rawRatesAsMap.entries()].sort());
+    let sortedEntries = reverse 
+        ? [...rawRatesAsMap.entries()].sort().reverse() 
+        : [...rawRatesAsMap.entries()].sort()
+    return new Map(sortedEntries);
   }
 
 }

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { Rates } from 'src/app/interfaces/rates.interface';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalWindowComponent } from '../modal-window/modal-window.component';
+import { CalcService } from 'src/app/services/calc.service';
 
 @Component({
   selector: 'app-cross-rates',
@@ -8,34 +11,31 @@ import { Rates } from 'src/app/interfaces/rates.interface';
   styleUrls: ['./cross-rates.component.scss'],
 })
 export class CrossRatesComponent implements OnInit {
-  public data;
-  ratesRefs = {};
+  private rates = new Map<string, number>();
 
-  currencies = new Map<string, string>();
-  currencyBase;
-  currencyBaseSrc: string;
-  
-  bases = ["USD","GBP","PLN","CZK","RON","AUD","BGN", "DKK", "HRK", "ZAR"];
-  header = ["#",...this.bases];
+  data;
+  ratesRefs = new Map<string, Map<string, number>>();
+  currencies = new Map<string, boolean>();
 
-  countries = this.bases;
-  countries_str = this.bases.toString();
+  crossCurrencies: string[];
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, 
+              private ngbModal: NgbModal) {}
 
   ngOnInit() {
+    this.crossCurrencies = this.apiService.getCurrencyNames().slice(0, 6);
+    this.updateCurrencies();
+    this.getRates();
+  }
+
+  updateCurrencies() {
     let currencyNames = this.apiService.getCurrencyNames();
     for (let i = 0; i < currencyNames.length; i++) {
-      this.currencies.set(currencyNames[i], this.apiService.getFlagImgSrc(currencyNames[i]));
-    }
-    this.currencyBase = 'USD';
-    this.currencyBaseSrc = this.currencies.get(this.currencyBase);
-
-    for (let base of this.bases) {
-        this.apiService.getCrossRates(this.countries_str, base).subscribe((result: Rates) => {
-            let data = {"rates": result.rates}
-            this.ratesRefs[base] = data;
-        }); 
+      if (this.crossCurrencies.includes(currencyNames[i])) {
+        this.currencies.set(currencyNames[i], true);
+      } else {
+        this.currencies.set(currencyNames[i], false);
+      }
     }
   }
 
@@ -43,14 +43,34 @@ export class CrossRatesComponent implements OnInit {
     return this.apiService.getFlagImgSrc(currencyName);
   }
 
-  selectCurrencyBase(event) {
-    if (event.target.value === undefined) {
-      this.currencyBase = event.target.parentNode.value;
-      this.currencyBaseSrc = this.apiService.getFlagImgSrc(event.target.parentNode.value);
-    } else {
-      this.currencyBase = event.target.value;
-      this.currencyBaseSrc = this.apiService.getFlagImgSrc(event.target.value);
+  openModal() {
+    const modalRef = this.ngbModal.open(ModalWindowComponent, {backdrop: 'static'});
+    modalRef.componentInstance.currencies = this.currencies;
+    modalRef.result.then((result) => {
+      if (result) {
+        this.crossCurrencies = result;
+        this.updateCurrencies();
+        this.getRates();
+      }
+    }, (reason) => {});
+  }
+
+  getRates() {
+    let tempRatesRefs = new Map<string, Map<string, number>>();
+    let countriesWithEur = this.crossCurrencies;
+    let countriesWoEur = this.crossCurrencies.filter(el => el !== "EUR");
+    for (let base of this.crossCurrencies) {
+      let setOfRates = new Map<string, number>();
+      let symbols = (base === "EUR") ? countriesWoEur : countriesWithEur;
+      this.apiService.getCrossRates(symbols.toString(), base).subscribe((result: Rates) => {
+        for (let crossCurrency of this.crossCurrencies) {
+          setOfRates.set(crossCurrency,
+            (base === "EUR" && crossCurrency === "EUR") ? 1 : result.rates[crossCurrency]);
+        }
+      });
+      tempRatesRefs.set(base, setOfRates);
     }
+    this.ratesRefs = tempRatesRefs;
   }
 
 }

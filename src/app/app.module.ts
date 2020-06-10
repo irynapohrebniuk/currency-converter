@@ -16,7 +16,8 @@ import { RateDynamicsComponent } from './components/rate-dynamics/rate-dynamics.
 import { CalcService } from './services/calc.service';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule } from '@angular/forms';
-import { CurrenciesSelectorComponent } from './components/currencies-selector/currencies-selector.component';
+import { CrossTableComponent } from './components/cross-table/cross-table.component';
+import { ModalWindowComponent } from './components/modal-window/modal-window.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CurrenciesSelectorComponent } from './components/currencies-selector/cu
     PopularRatesComponent,
     RateDynamicsComponent,
     FooterComponent,
-    CurrenciesSelectorComponent
+    CrossTableComponent,
+    ModalWindowComponent
   ],
   imports: [
     BrowserModule,

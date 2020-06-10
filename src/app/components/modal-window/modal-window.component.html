@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Select currencies</h4>
+    <button type="button" class="btn close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="currency-container">
+        <div *ngFor="let currency of currencies | keyvalue" id="{{currency.key}}" class="currency">
+            <input type="checkbox" [attr.checked]="currency.value ? 'checked' : null" 
+                   class="form-check-input" id="{{currency.key}}" (change)="checkCurrency($event)">
+            {{currency.key}}
+            <img src="{{getImage(currency.key)}}" class="flag">
+        </div>
+    </div>
+   <button (click)="passBack()" type="submit" class="btn btn-primary">Ok</button>
+</div> 

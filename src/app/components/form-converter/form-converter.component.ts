@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { Rates } from 'src/app/interfaces/rates.interface';
+import { CalcService } from 'src/app/services/calc.service';
 
 @Component({
   selector: 'app-form-converter',
@@ -10,7 +11,7 @@ import { Rates } from 'src/app/interfaces/rates.interface';
 
 export class FormConverterComponent implements OnInit {
 
-  constructor(private apiService: ApiService) { 
+  constructor(private apiService: ApiService, private calc: CalcService) { 
     this.currencyNames = this.apiService.getCurrencyNames();
     this.periods = this.apiService.getPeriodNames();
     this.currencySource = this.apiService.getDefaultSourceCurrency();
@@ -96,14 +97,21 @@ export class FormConverterComponent implements OnInit {
     this.apiService.getLatestRates(base,currency).subscribe((result: Rates) => {
       let rates;
       rates = result.rates;
-      this.baseToTarget = rates[currency].toFixed(2);
-      this.currencyTargetAmount = (this.currencySourceAmount * this.baseToTarget).toFixed(2);
+      this.baseToTarget = rates[currency];
+      this.currencyTargetAmount = this.currencySourceAmount * this.baseToTarget;
     });
     this.apiService.getLatestRates(currency,base).subscribe((result: Rates) => {
       let rates;
       rates = result.rates;
-      this.targetToBase = rates[base].toFixed(2);
+      this.targetToBase = rates[base];
     });
+  }
 
+  toMoneyFormat(value) {
+    return this.calc.toMoneyFormat(value);
+  }
+
+  toFinancialFormat(value) {
+    return this.calc.toFinancialFormat(value);
   }
 }

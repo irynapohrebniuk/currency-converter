@@ -2,9 +2,11 @@
     position: relative;
     bottom: 0;
     display: block;
+    border-top: 1px solid gainsboro;
     padding: 10px;
-    margin-top: 40px;
+    width: 90%;  
     text-align: right;
-    color: whitesmoke;
-    background-color: black;
+    color: black;
+    background-color: white;
+    margin: 0 auto;
 }

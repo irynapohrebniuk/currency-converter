@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service'
 import { Rates } from 'src/app/interfaces/rates.interface';
+import { CalcService } from 'src/app/services/calc.service';
 
 @Component({
   selector: 'app-popular-rates',
@@ -16,7 +17,8 @@ export class PopularRatesComponent implements OnInit {
   currencyBase;
   currencyBaseSrc: string;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService,
+              private calc: CalcService) {}
 
   ngOnInit(): void {
     let currencyNames = this.apiService.getCurrencyNames();
@@ -34,8 +36,7 @@ export class PopularRatesComponent implements OnInit {
 
   formatRates(rates) {
     Object.keys(rates).map(key => {
-      console.log("key", key);
-      rates[key] = Number(Number.parseFloat(rates[key]).toFixed(2));
+      rates[key] = this.calc.toFinancialFormat(rates[key]);
     });
     return rates;
   }
@@ -45,8 +46,6 @@ export class PopularRatesComponent implements OnInit {
     .subscribe((result: Rates) => {
       let rates = result.rates;
       this.popularRates = this.formatRates(rates);
-      console.log("this.formatRates(rates) =", this.formatRates(rates));
-      console.log("this.popularRates =", this.popularRates);
     });
   }
 }

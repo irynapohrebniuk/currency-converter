@@ -1,5 +1,5 @@
 export interface Rates {
-    "rates": Map<string,any>
+    "rates": Map<String, Map<string, number>>
     "base" : string,
     "date" : string
 }

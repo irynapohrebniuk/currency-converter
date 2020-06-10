@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service'
 import { Rates } from 'src/app/interfaces/rates.interface';
+import { CalcService } from 'src/app/services/calc.service';
 
 @Component({
   selector: 'app-latest-rates',
@@ -20,7 +21,7 @@ export class LatestRatesComponent implements OnInit {
   currencyBase;
   currencyBaseSrc: string;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private calc: CalcService) {}
 
   ngOnInit(): void {
     let currencyNames = this.apiService.getCurrencyNames();
@@ -30,13 +31,6 @@ export class LatestRatesComponent implements OnInit {
     this.currencyBase = 'USD';
     this.currencyBaseSrc = this.currencies.get(this.currencyBase);
     this.getLatestRates();
-  }
-
-  private formatRates(rates): void {
-    Object.keys(rates).map(function (key, index) {
-      //TODO: It's too complex
-      rates[key] = Number(Number.parseFloat(rates[key]).toFixed(2));
-    });
   }
 
   private slicedData() {
@@ -66,7 +60,6 @@ export class LatestRatesComponent implements OnInit {
 
   getLatestRates() {
     this.apiService.getAllLatestRates(this.currencyBase).subscribe((result: Rates) => {
-      this.formatRates(result.rates);
       this.latestRates = result;
       this.slicedData();
     });
@@ -84,5 +77,10 @@ export class LatestRatesComponent implements OnInit {
     this.clicked = false;
     this.buttonName = 'All rates';
   }
+
+  toMoneyFormat(num) {
+    return this.calc.toMoneyFormat(num);
+  }
+
 
 }

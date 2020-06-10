@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CurrenciesSelectorComponent } from './currencies-selector.component';
+import { ModalWindowComponent } from './modal-window.component';
 
-describe('CurrenciesSelectorComponent', () => {
-  let component: CurrenciesSelectorComponent;
-  let fixture: ComponentFixture<CurrenciesSelectorComponent>;
+describe('ModalWindowComponent', () => {
+  let component: ModalWindowComponent;
+  let fixture: ComponentFixture<ModalWindowComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CurrenciesSelectorComponent ]
+      declarations: [ ModalWindowComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CurrenciesSelectorComponent);
+    fixture = TestBed.createComponent(ModalWindowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

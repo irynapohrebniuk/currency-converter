@@ -1,3 +1,4 @@
+
 <section>
   <div class='container-grid'>
     <div class="selector">
@@ -39,7 +40,7 @@
                 {{ item.key }}
               </td>
               <td class="col_2">
-                {{ item.value }}
+                {{toMoneyFormat(item.value)}}
               </td>
             </tr>
           </tbody>

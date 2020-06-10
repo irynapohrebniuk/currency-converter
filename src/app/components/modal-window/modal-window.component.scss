@@ -1,0 +1,39 @@
+.currency-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 35px;
+  & div {
+    width: 80px;
+    margin: 10px;
+  }
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+  width: 80px;
+}
+
+.flag {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+}
+
+.flag-main {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  margin-left: 8px;
+}
+
+.currency {
+  margin: 10px;
+  margin: 0 auto;
+}
+
+.modal-body {
+  display: block;
+}
