@@ -12,6 +12,7 @@ import { CalcService } from 'src/app/services/calc.service';
 export class FormConverterComponent implements OnInit {
 
   constructor(private apiService: ApiService, private calc: CalcService) { 
+    
     this.currencyNames = this.apiService.getCurrencyNames();
     this.periods = this.apiService.getPeriodNames();
     this.currencySource = this.apiService.getDefaultSourceCurrency();
@@ -38,6 +39,7 @@ export class FormConverterComponent implements OnInit {
 
 
   ngOnInit(): void {
+    
     this.data = new Map();
     for (let index = 0; index < this.currencyNames.length; index++) {
       const currency = this.currencyNames[index];
@@ -94,6 +96,7 @@ export class FormConverterComponent implements OnInit {
 
 
   getLatestRates(base,currency) {
+    
     this.apiService.getLatestRates(base,currency).subscribe((result: Rates) => {
       let rates;
       rates = result.rates;

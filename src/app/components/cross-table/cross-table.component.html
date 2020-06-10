@@ -1,23 +1,30 @@
-<div class="scroll" *ngIf="ratesRefs && header.length > 0; else warning">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th *ngFor="let key of header" scope="col">{{key}}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let ref of ratesRefs | keyvalue: initialOrder">
-                <th scope="row">{{ ref.key }}</th>
-                <td *ngFor="let item of ref.value | keyvalue: initialOrder">
-                    {{toMoneyFormat(item.value)}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div *ngIf="ratesRefs; else loader">
+    <div class="scroll" *ngIf="header.length > 0; else warning">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th *ngFor="let key of header" scope="col">{{key}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ref of ratesRefs | keyvalue: initialOrder">
+                    <th scope="row">{{ ref.key }}</th>
+                    <td *ngFor="let item of ref.value | keyvalue: initialOrder">
+                        {{toMoneyFormat(item.value)}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <ng-template #warning>
     <div>
         Please click the button "Change Currencies" to update currency set
+    </div>
+</ng-template>
+<ng-template #loader>
+    <div>
+        Loading data ...
     </div>
 </ng-template>

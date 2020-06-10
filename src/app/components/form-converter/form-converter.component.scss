@@ -22,7 +22,7 @@ body {
 
 .converter-row {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 30% 70%;
   @media only screen and (max-width: 600px) {
     display: block;
     width: 100%;
@@ -41,7 +41,6 @@ body {
 .rates-column {
   width: 90%;
   margin: 0 auto;
-//  background-color: #f1f1f1;
   border-radius: 10px;
 }
 
@@ -82,7 +81,6 @@ input {
   font-weight: 800;
   padding: 10px;
   outline: none;
-//  background-color: #f1f1f1;
   border: 1px solid gainsboro;
   border-radius: 5px 0 0 5px;
   height: 62px;

@@ -44,8 +44,9 @@
                         <div class="input-header left">TO</div>
                         <div class="input-content">
                             <div>
-                                <input type="text" name="amountOutput" #amountOutput="ngModel" ngModel
-                                    value="{{toMoneyFormat(currencyTargetAmount)}}" placeholder="{{currencyTargetAmount}}" readonly>
+                                <input type="text"
+                                    value="{{toMoneyFormat(currencyTargetAmount)}}" 
+                                    placeholder="{{toMoneyFormat(currencyTargetAmount)}}" readonly>
                             </div>
 
                             <div ngbDropdown class="d-inline-block">

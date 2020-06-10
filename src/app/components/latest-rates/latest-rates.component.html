@@ -26,6 +26,7 @@
       <!-- Table with rates -->
       <div *ngIf="firstFiveRates; else loader">
         <div class="title">Currency Table: {{currencyBase}} </div>
+        <div class="scroll">
         <table class="table table-striped">
           <thead>
             <tr>
@@ -45,6 +46,7 @@
             </tr>
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   </div>
