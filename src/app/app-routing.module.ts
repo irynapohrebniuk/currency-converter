@@ -5,6 +5,7 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
 import { LatestRatesComponent } from './components/latest-rates/latest-rates.component';
 import { FormConverterComponent } from './components/form-converter/form-converter.component';
 import { RateDynamicsComponent } from './components/rate-dynamics/rate-dynamics.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'crossrates', component: CrossRatesComponent },
   { path: 'linechart', component: LineChartComponent },
   { path: 'latest', component: LatestRatesComponent },
-  { path: 'rate-dynamics', component: RateDynamicsComponent }
+  { path: 'rate-dynamics', component: RateDynamicsComponent },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

@@ -14,10 +14,11 @@ import { LatestRatesComponent } from './components/latest-rates/latest-rates.com
 import { PopularRatesComponent } from './components/popular-rates/popular-rates.component';
 import { RateDynamicsComponent } from './components/rate-dynamics/rate-dynamics.component';
 import { CalcService } from './services/calc.service';
-import { FooterComponent } from './footer/footer.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { CrossTableComponent } from './components/cross-table/cross-table.component';
 import { ModalWindowComponent } from './components/modal-window/modal-window.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ModalWindowComponent } from './components/modal-window/modal-window.com
     RateDynamicsComponent,
     FooterComponent,
     CrossTableComponent,
-    ModalWindowComponent
+    ModalWindowComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
